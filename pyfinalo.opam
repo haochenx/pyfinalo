@@ -4,6 +4,7 @@ synopsis: "pyfinalo"
 depends: [
   "dune" {>= "3.7"}
   "pyml" {>= "20231101"}
+  "alcotest" {with-test}
   "odoc" {with-doc}
 ]
 build: [

@@ -10,4 +10,5 @@
   ;; for src/bin_pyfinalo
   ;; unnecessary otherwise
   (pyml (>= 20231101))
+  (alcotest :with-test)
 ))
