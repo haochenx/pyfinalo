@@ -131,21 +131,15 @@ print(error)   # Output: len(5)+3 contains ill-typed subterm len(5)
 dune runtest
 ```
 
-### Building Documentation
-```bash
-dune build @doc
-```
-
 ### Project Structure
 ```
 src/
 ├── lib_pyfinalo/          # Core DSL implementation
 │   ├── lang.ml           # Language definitions and interpreters
-│   ├── interp.ml         # Interpreter implementations
-│   └── test/             # Unit tests (Alcotest framework)
+│   └── interp.ml         # Interpreter implementations
 └── bin_pyfinalo_py/      # Python bindings
     ├── bin_pyfinalo_py.ml # Main executable
-    └── test/             # Integration tests (cram tests)
+    └── test/             # Test suite
 ```
 
 ## Contributing
