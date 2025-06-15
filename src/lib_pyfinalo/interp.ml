@@ -1,9 +1,18 @@
 open Lang
 
-module DirectValInterp = struct
-  type 't repr = 't InitialAst.repr
+open struct
+  (* local helper functions *)
 
-  open InitialAst
+  [@@@warning "-unused-value-declaration"]
+
+  let uncurry (f : 'a*'b -> 'c) : 'a -> 'b -> 'c =
+    fun x -> fun y -> f (x, y)
+  let (&) x y = x y
+end
+
+module DirectValInterp = struct
+  type 't repr = 't irepr
+  open InitialRepr
 
   let int x = V_int x
   let str x = V_str x
@@ -17,3 +26,19 @@ end
 (* module signature check *)
 module _ : Lang.LangBase = DirectValInterp
 
+module UntypedAstInterp = struct
+  type 't repr = 't urepr
+  open UntypedAst
+
+  let int x = E_litint x
+  let str x = E_litstr x
+
+  let add x y = E_add (x, y)
+  let mul x y = E_mul (x, y)
+
+  let len s = E_len s
+end
+
+(* module signature check *)
+module _ : Lang.LangUntyped = UntypedAstInterp
+module _ : Lang.LangBase = UntypedAstInterp

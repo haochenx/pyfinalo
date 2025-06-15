@@ -10,24 +10,31 @@ module type LangBase = sig
   val len : string repr -> int repr
 end
 
-module InitialAst = struct
-  type _ repr =
-    | V_int : int -> int repr
-    | V_str : string -> string repr
+module type LangUntyped = sig
+  type _ repr
 
-  type untyped_ast =
-    | E_litint : int -> untyped_ast
-    | E_litstr : string -> untyped_ast
-    | E_add : untyped_ast * untyped_ast -> untyped_ast
-    | E_mul : untyped_ast * untyped_ast -> untyped_ast
-    | E_len : untyped_ast * untyped_ast -> untyped_ast
+  val int : int -> int repr
+  val str : string -> string repr
 
-  type _ typed_ast =
-    | T_litint : int -> int typed_ast
-    | T_litstr : string -> string typed_ast
-    | T_add : int typed_ast * int typed_ast -> int typed_ast
-    | T_mul : int typed_ast * int typed_ast -> int typed_ast
-    | T_len : string typed_ast -> int typed_ast
+  val add : _ repr -> _ repr -> _ repr
+  val mul : _ repr -> _ repr -> _ repr
+
+  val len : _ repr -> _ repr
+end
+
+module InitialRepr = struct
+  type _ valu =
+    | V_int : int -> int valu
+    | V_str : string -> string valu
+
+  type 't repr = 't valu
+
+  type _ ast =
+    | T_litint : int -> int ast
+    | T_litstr : string -> string ast
+    | T_add : int ast * int ast -> int ast
+    | T_mul : int ast * int ast -> int ast
+    | T_len : string ast -> int ast
 
   let pp_repr (type x) ppf : x repr -> unit = function
     | V_int x -> Format.pp_print_int ppf x
@@ -35,6 +42,39 @@ module InitialAst = struct
     | _ -> .
 end
 
-type 't irepr = 't InitialAst.repr
-let pp_irepr = InitialAst.pp_repr
+module UntypedAst = struct
+  type ast =
+    | E_litint : int -> ast
+    | E_litstr : string -> ast
+    | E_add : ast * ast -> ast
+    | E_mul : ast * ast -> ast
+    | E_len : ast -> ast
+
+  type _ repr = ast
+
+  let rec pp_repr (type x) ppf : x repr -> unit = function
+    | E_litint x -> Format.pp_print_int ppf x
+    | E_litstr s -> Format.pp_print_string ppf (String.escaped s)
+    | E_add (e1, e2) ->
+       Format.fprintf ppf "%a+%a"
+         pp_repr e1
+         pp_repr e2
+    | E_mul (e1, e2) ->
+       Format.fprintf ppf "%a*%a"
+         pp_repr e1
+         pp_repr e2
+    | E_len e ->
+       Format.fprintf ppf "len(%a)"
+         pp_repr e
+    | _ -> .
+end
+
+type 't typed_ast = 't InitialRepr.ast
+type untyped_ast = UntypedAst.ast
+
+type 't irepr = 't InitialRepr.repr
+let pp_irepr = InitialRepr.pp_repr
+
+type 't urepr = 't UntypedAst.repr
+let pp_urepr = UntypedAst.pp_repr
 
