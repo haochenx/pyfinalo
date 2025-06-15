@@ -1,4 +1,8 @@
 (executable
  (name bin_pyfinalo_py)
  (public_name pyfinalo_py)
- (libraries lib_pyfinalo pyml))
+ (libraries lib_pyfinalo pyml)
+
+ ;; temporarily due to https://github.com/ocamllibs/stdcompat/issues/36
+ (enabled_if (< %{ocaml_version} 5.3))
+)

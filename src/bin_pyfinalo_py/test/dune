@@ -1,3 +1,7 @@
 (cram
  (deps %{bin:pyfinalo_py}
-  (glob_files *.py)))
+  (glob_files *.py))
+
+ ;; to keep in sync with ../dune
+ (enabled_if (< %{ocaml_version} 5.3))
+)
