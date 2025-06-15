@@ -131,6 +131,11 @@ print(error)   # Output: len(5)+3 contains ill-typed subterm len(5)
 dune runtest
 ```
 
+### Building Documentation
+```bash
+dune build @doc
+```
+
 ### Project Structure
 ```
 src/
@@ -144,7 +149,7 @@ src/
 
 ## Contributing
 
-This is a research project exploring DSL implementation patterns. Contributions, issues, and discussions about the tagless-final approach are welcome.
+This is a quick demo exploring DSL implementation patterns. Contributions, issues, and discussions about the tagless-final approach are welcome.
 
 ## License
 
