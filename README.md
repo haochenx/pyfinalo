@@ -4,7 +4,7 @@ A research project exploring tagless-final DSL implementation in OCaml with Pyth
 
 ## Overview
 
-`pyfinalo` is an experimental domain-specific language (DSL) implementation that demonstrates the tagless-final approach in OCaml. The project bridges functional programming concepts with Python accessibility, providing multiple interpreters that showcase different evaluation strategies and type checking behaviors.
+`pyfinalo` is an experimental domain-specific language (DSL) implementation with Python interoperability at its core. The project bridges functional programming concepts with Python accessibility, providing multiple interpreters that showcase different evaluation strategies and type checking behaviors.
 
 ### Key Features
 
@@ -131,17 +131,13 @@ print(error)   # Output: len(5)+3 contains ill-typed subterm len(5)
 dune runtest
 ```
 
-### Building Documentation
-```bash
-dune build @doc
-```
-
 ### Project Structure
 ```
 src/
 ├── lib_pyfinalo/          # Core DSL implementation
 │   ├── lang.ml           # Language definitions and interpreters
-│   └── interp.ml         # Interpreter implementations
+│   ├── interp.ml         # Interpreter implementations
+│   └── test/             # Test suite
 └── bin_pyfinalo_py/      # Python bindings
     ├── bin_pyfinalo_py.ml # Main executable
     └── test/             # Test suite
@@ -149,8 +145,5 @@ src/
 
 ## Contributing
 
-This is a research project exploring DSL implementation patterns. Contributions, issues, and discussions about the tagless-final approach are welcome.
+This is a quick demo exploring DSL implementation patterns. Contributions, issues, and discussions about the tagless-final approach are welcome.
 
-## License
-
-This project is provided as-is for educational and research purposes.
