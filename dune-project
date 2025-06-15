@@ -7,7 +7,7 @@
  (synopsis "pyfinalo")
  (depends
   
-  ;; for src/bin_pyfinalo
+  ;; for src/bin_pyfinalo_py
   ;; unnecessary otherwise
   (pyml (>= 20231101))
   (alcotest :with-test)
