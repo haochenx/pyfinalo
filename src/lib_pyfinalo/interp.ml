@@ -52,37 +52,54 @@ end
 type 'r consumer = (module Consumer with type r = 'r)
 
 module TypeChecking (Tgt : Lang.LangBase) = struct
-  type 't repr =
-    | Int_typed : int Tgt.repr -> _ repr
-    | String_typed : string Tgt.repr -> _ repr
-    | Ill_typed : _ repr
+  type ast = UntypedAst.ast
 
-  let int x = Int_typed (Tgt.int x)
-  let str s = String_typed (Tgt.str s)
+  type 't repr =
+    | Int_typed : int Tgt.repr * ast -> _ repr
+    | String_typed : string Tgt.repr * ast -> _ repr
+    | Ill_typed : ast -> _ repr
+
+  let int x = Int_typed (Tgt.int x, UntypedAstInterp.int x)
+  let str s = String_typed (Tgt.str s, UntypedAstInterp.str s)
+
+  let ast = function
+    | Int_typed (_, term) -> term
+    | String_typed (_, term) -> term
+    | Ill_typed term -> term
+
+  let sub_ill2 e1 e2 otherwise = match e1, e2 with
+    | Ill_typed term, _ -> Ill_typed term
+    | _, Ill_typed term -> Ill_typed term
+    | _ -> otherwise
 
   let add e1 e2 =
+    let term = UntypedAstInterp.add (ast e1) (ast e2) in
     match e1, e2 with
-    | (Int_typed e1),
-      (Int_typed e2)
-      -> Int_typed (Tgt.add e1 e2)
-    | _ -> Ill_typed
+    | (Int_typed (e1, _)),
+      (Int_typed (e2, _))
+      -> Int_typed (Tgt.add e1 e2, term)
+    | _ -> sub_ill2 e1 e2 (Ill_typed term)
 
   let mul e1 e2 =
+    let term = UntypedAstInterp.mul (ast e1) (ast e2) in
     match e1, e2 with
-    | (Int_typed (e1 : int Tgt.repr)),
-      (Int_typed (e2 : int Tgt.repr))
-      -> Int_typed (Tgt.mul e1 e2)
-    | _ -> Ill_typed
+    | (Int_typed (e1, _)),
+      (Int_typed (e2, _))
+      -> Int_typed (Tgt.mul e1 e2, term)
+    | _ -> sub_ill2 e1 e2 (Ill_typed term)
 
-  let len = function
-    | (String_typed (e : string Tgt.repr))
-      -> Int_typed (Tgt.len e)
-    | _ -> Ill_typed
+  let len e =
+    let term = UntypedAstInterp.len (ast e) in
+    match e with
+    | (String_typed (e, _))
+      -> Int_typed (Tgt.len e, term)
+    | Ill_typed term -> Ill_typed term
+    | _ -> Ill_typed term
 
   let pp_repr (vppf : Format.formatter -> _ Tgt.repr -> unit) ppf : _ repr -> unit = function
-    | Int_typed v -> Format.fprintf ppf "%a : int" vppf (Obj.magic v)
-    | String_typed v -> Format.fprintf ppf "%a : string" vppf (Obj.magic v)
-    | Ill_typed -> Format.fprintf ppf "ill-typed"
+    | Int_typed (v, _) -> Format.fprintf ppf "%a : int" vppf (Obj.magic v)
+    | String_typed (v, _) -> Format.fprintf ppf "%a : string" vppf (Obj.magic v)
+    | Ill_typed term -> Format.fprintf ppf "ill-typed:%a" pp_urepr term
 
 end
 

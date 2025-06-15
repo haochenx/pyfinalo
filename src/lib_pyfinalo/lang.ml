@@ -49,6 +49,7 @@ module UntypedAst = struct
     | E_add : ast * ast -> ast
     | E_mul : ast * ast -> ast
     | E_len : ast -> ast
+    | E_hole : ast
 
   type _ repr = ast
 
@@ -66,6 +67,8 @@ module UntypedAst = struct
     | E_len e ->
        Format.fprintf ppf "len(%a)"
          pp_repr e
+    | E_hole ->
+       Format.fprintf ppf "??"
     | _ -> .
 end
 

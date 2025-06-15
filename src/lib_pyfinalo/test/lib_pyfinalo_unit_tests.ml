@@ -73,35 +73,43 @@ let () =
       "TypeChecking",
       let module TypeCheckingDirectValInterp = TypeChecking(DirectValInterp) in
       let module Checked = TypeCheckingDirectValInterp in
-      let test_type_checked = testable (Checked.pp_repr pp_irepr) (=) in
+      let test_type_checked =
+        testable
+          (Checked.pp_repr pp_irepr)
+          (fun e1 e2 -> match e1, e2 with
+           | Int_typed (e1, _), Int_typed (e2, _) -> e1 = e2
+           | String_typed (e1, _), String_typed (e2, _) -> e1 = e2
+           | Ill_typed term1, Ill_typed term2 -> term1 = term2
+           | _ -> false) in
+      let hole = UntypedAst.E_hole in
       [
           "lit", `Quick, (
             fun () ->
-            check test_type_checked "litint" (Int_typed (V_int 3)) Checked.(
+            check test_type_checked "litint" (Int_typed (V_int 3, hole)) Checked.(
               (int 3)
             );
-            check test_type_checked "litstr" (String_typed (V_str "hello")) Checked.(
+            check test_type_checked "litstr" (String_typed (V_str "hello", hole)) Checked.(
               (str "hello");
             );
           );
           "arith-welltyped", `Quick, (
             fun () ->
-            check test_type_checked "add1" (Int_typed (V_int 7)) Checked.(
+            check test_type_checked "add1" (Int_typed (V_int 7, hole)) Checked.(
               add (int 3) (int 4)
             );
-            check test_type_checked "mul1" (Int_typed (V_int 26)) Checked.(
+            check test_type_checked "mul1" (Int_typed (V_int 26, hole)) Checked.(
               mul (int 2) (int 13)
             );
-            check test_type_checked "mul2" (Int_typed (V_int 26)) Checked.(
+            check test_type_checked "mul2" (Int_typed (V_int 26, hole)) Checked.(
               mul (len (str "hi")) (int 13)
             );
           );
           "arith-illtyped", `Quick, (
             fun () ->
-            check test_type_checked "add1" (Ill_typed) Checked.(
+            check test_type_checked "add1" (Ill_typed (E_add (E_litint 3, E_litstr "hello"))) Checked.(
               add (int 3) (str "hello")
             );
-            check test_type_checked "add2" (Ill_typed) Checked.(
+            check test_type_checked "add2" (Ill_typed (E_len (E_litint 2))) Checked.(
               mul (len (int 2)) (int 13)
             );
           );
