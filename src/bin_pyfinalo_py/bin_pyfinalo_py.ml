@@ -73,6 +73,24 @@ let () =
     (Py.Import.add_module "pyfinalo_explain");
 
   match Sys.argv |> Array.to_list with
+  | _ :: ("--help" | "-h") :: _ ->
+     let help_text = {|pyfinalo_py - Tagless-final DSL exposed to Python
+
+Usage:
+  pyfinalo_py              Start interactive Python REPL
+  pyfinalo_py -            Read Python script from stdin
+  pyfinalo_py --help       Show this help message
+  pyfinalo_py -h           Show this help message
+
+Available modules:
+  pyfinalo         - Direct value interpreter
+  pyfinalo_ast     - Untyped AST interpreter  
+  pyfinalo_explain - Explaining interpreter with type error messages
+
+Example:
+  import pyfinalo as p
+  print(p.show(p.add(p.len(p.str("hello")), p.int(3))))|} in
+     print_endline help_text
   | _ :: "-" :: _ -> Py.Run.any_file (Channel stdin) "stdin" |> ignore
   | _ ->
      let greetings =
