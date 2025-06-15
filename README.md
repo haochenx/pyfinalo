@@ -18,6 +18,28 @@
    - Start `pyfinalo` interactively with `pyfinalo_py` (or with readline support as `rlwrap pyfinalo_py`).
    - Or run a script like `cat src/bin_pyfinalo_py/test/suite1.py | pyfinalo_py -`.
 
+### Docker Alternative
+
+If you prefer using Docker:
+
+1. Clone and build:
+   ```bash
+   git clone https://github.com/haochenx/pyfinalo.git
+   cd pyfinalo
+   ./docker/build.sh
+   ```
+
+2. Run interactively:
+   ```bash
+   docker run -it pyfinalo
+   # Inside container: pyfinalo_py
+   ```
+
+3. Or run a script:
+   ```bash
+   cat your_script.py | docker run -i --rm pyfinalo pyfinalo_py -
+   ```
+
 ## Examples
 
 ```python
