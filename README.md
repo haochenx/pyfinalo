@@ -146,4 +146,3 @@ src/
 ## Contributing
 
 This is a quick demo exploring DSL implementation patterns. Contributions, issues, and discussions about the tagless-final approach are welcome.
-
