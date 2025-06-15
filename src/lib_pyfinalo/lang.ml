@@ -38,7 +38,7 @@ module InitialRepr = struct
 
   let pp_repr (type x) ppf : x repr -> unit = function
     | V_int x -> Format.pp_print_int ppf x
-    | V_str s -> Format.pp_print_string ppf (String.escaped s)
+    | V_str s -> Format.fprintf ppf "\"%s\"" (String.escaped s)
     | _ -> .
 end
 
@@ -55,7 +55,7 @@ module UntypedAst = struct
 
   let rec pp_repr (type x) ppf : x repr -> unit = function
     | E_litint x -> Format.pp_print_int ppf x
-    | E_litstr s -> Format.pp_print_string ppf (String.escaped s)
+    | E_litstr s -> Format.fprintf ppf "\"%s\"" (String.escaped s)
     | E_add (e1, e2) ->
        Format.fprintf ppf "%a+%a"
          pp_repr e1

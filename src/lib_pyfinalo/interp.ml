@@ -59,10 +59,14 @@ module TypeChecking (Tgt : Lang.LangBase) = struct
     | String_typed (_, term) -> term
     | Ill_typed term -> term
 
-  let sub_ill2 e1 e2 otherwise = match e1, e2 with
-    | Ill_typed term, _ -> Ill_typed term
-    | _, Ill_typed term -> Ill_typed term
-    | _ -> otherwise
+  open struct
+      (* local helper functions *)
+
+      let sub_ill2 e1 e2 otherwise = match e1, e2 with
+        | Ill_typed term, _ -> Ill_typed term
+        | _, Ill_typed term -> Ill_typed term
+        | _ -> otherwise
+    end
 
   let add e1 e2 =
     let term = UntypedAstInterp.add (ast e1) (ast e2) in
@@ -95,4 +99,66 @@ module TypeChecking (Tgt : Lang.LangBase) = struct
 
 end
 
+(* module signature check *)
 module _ (Tgt : Lang.LangBase) : Lang.LangUntyped = TypeChecking(Tgt)
+module _ (Tgt : Lang.LangUntyped) : Lang.LangUntyped = TypeChecking(Tgt)
+
+module ExplainInterpTyped = struct
+  type ast = UntypedAst.ast
+  type 't repr = 't irepr * ast
+
+  let explain (v, term) =
+    Format.asprintf "%a evaluates to %a"
+      pp_urepr term
+      pp_irepr v
+
+  let int x = DirectValInterp.int x, UntypedAstInterp.int x
+  let str s = DirectValInterp.str s, UntypedAstInterp.str s
+
+  let add (x, x') (y, y') = DirectValInterp.add x y, UntypedAstInterp.add x' y'
+  let mul (x, x') (y, y') = DirectValInterp.mul x y, UntypedAstInterp.mul x' y'
+
+  let len (s, s') = DirectValInterp.len s, UntypedAstInterp.len s'
+end
+
+(* module signature check *)
+module _ : Lang.LangBase = ExplainInterpTyped
+
+module ExplainInterpUntyped = struct
+  module Checker = TypeChecking(DirectValInterp)
+
+  type 't res = 't Checker.repr
+  type ast = UntypedAst.ast
+  type 't repr = 't res * ast
+
+  let explain (v, term) =
+    match v with
+    | Checker.Ill_typed sub when sub = term ->
+       Format.asprintf "%a is ill-typed"
+         pp_urepr term
+    | Checker.Ill_typed sub ->
+       Format.asprintf "%a contains ill-typed subterm %a"
+         pp_urepr term
+         pp_urepr sub
+    | Checker.Int_typed (v, _) ->
+       Format.asprintf "%a evaluates to integer %a"
+         pp_urepr term
+         pp_irepr v
+    | Checker.String_typed (v, _) ->
+       Format.asprintf "%a evaluates to string %a"
+         pp_urepr term
+         pp_irepr v
+    | _ -> .
+
+  let int x = Checker.int x, UntypedAstInterp.int x
+  let str s = Checker.str s, UntypedAstInterp.str s
+
+  let add (x, x') (y, y') = Checker.add x y, UntypedAstInterp.add x' y'
+  let mul (x, x') (y, y') = Checker.mul x y, UntypedAstInterp.mul x' y'
+
+  let len (s, s') = Checker.len s, UntypedAstInterp.len s'
+end
+
+(* module signature check *)
+module _ : Lang.LangUntyped = ExplainInterpUntyped
+module _ : Lang.LangBase = ExplainInterpUntyped

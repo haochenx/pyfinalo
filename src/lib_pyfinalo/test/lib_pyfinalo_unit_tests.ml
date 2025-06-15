@@ -70,6 +70,75 @@ let () =
           );
         ];
 
+      "ExplainInterpTyped", [
+          "lit", `Quick, (
+            fun () ->
+            check string "litint" "3 evaluates to 3" ExplainInterpTyped.(
+              (int 3)
+              |> explain
+            );
+            check string "litint" "\"hello\" evaluates to \"hello\"" ExplainInterpTyped.(
+              (str "hello")
+              |> explain
+            );
+          );
+          "arith", `Quick, (
+            fun () ->
+            check string "add1" "3+4 evaluates to 7" ExplainInterpTyped.(
+              add (int 3) (int 4)
+              |> explain
+            );
+            check string "mul1" "2*13 evaluates to 26" ExplainInterpTyped.(
+              mul (int 2) (int 13)
+              |> explain
+            );
+            check string "mul2" "len(\"hi\")*13 evaluates to 26" ExplainInterpTyped.(
+              mul (len (str "hi")) (int 13)
+              |> explain
+            );
+          );
+        ];
+
+      "ExplainInterpUntyped", [
+          "lit", `Quick, (
+            fun () ->
+            check string "litint" "3 evaluates to integer 3" ExplainInterpUntyped.(
+              (int 3)
+              |> explain
+            );
+            check string "litint" "\"hello\" evaluates to string \"hello\"" ExplainInterpUntyped.(
+              (str "hello")
+              |> explain
+            );
+          );
+          "arith-welltyped", `Quick, (
+            fun () ->
+            check string "add1" "3+4 evaluates to integer 7" ExplainInterpUntyped.(
+              add (int 3) (int 4)
+              |> explain
+            );
+            check string "mul1" "2*13 evaluates to integer 26" ExplainInterpUntyped.(
+              mul (int 2) (int 13)
+              |> explain
+            );
+            check string "mul2" "len(\"hi\")*13 evaluates to integer 26" ExplainInterpUntyped.(
+              mul (len (str "hi")) (int 13)
+              |> explain
+            );
+          );
+          "arith-illtyped", `Quick, (
+            fun () ->
+            check string "add1" "3+\"hello\" is ill-typed" ExplainInterpUntyped.(
+              add (int 3) (str "hello")
+              |> explain
+            );
+            check string "add2" "len(2)*13 contains ill-typed subterm len(2)" ExplainInterpUntyped.(
+              mul (len (int 2)) (int 13)
+              |> explain
+            );
+          );
+        ];
+
       "TypeChecking",
       let module TypeCheckingDirectValInterp = TypeChecking(DirectValInterp) in
       let module Checked = TypeCheckingDirectValInterp in
