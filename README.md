@@ -40,6 +40,12 @@ If you prefer using Docker:
    cat your_script.py | docker run -i --rm pyfinalo pyfinalo_py -
    ```
 
+For development with full build environment:
+```bash
+./docker/build-dev.sh
+docker run -it pyfinalo-dev
+```
+
 ## Examples
 
 ```python
