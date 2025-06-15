@@ -59,6 +59,11 @@ jobs:
         # Test that we can build inside the dev container
         docker run --rm pyfinalo-dev bash -c 'cd /home/opam/pyfinalo && eval $(opam env) && dune build'
         
+    - name: Run tests in development environment
+      run: |
+        # Run dune runtest to execute test suite
+        docker run --rm pyfinalo-dev bash -c 'cd /home/opam/pyfinalo && eval $(opam env) && dune runtest'
+        
     - name: Test development environment executable
       run: |
         # Test built executable by running a simple script
