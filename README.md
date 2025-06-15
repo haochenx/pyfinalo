@@ -8,7 +8,7 @@ A demo project exploring tagless-final DSL implementation in OCaml with Python b
 
 ### A Note on the Name
 
-This project was originally intended as a demonstration of Python EDSL implementation using OCaml in the tagless-final style - hence the portmanteau "pyfinalo" (Python + Final + OCaml). JavaScript/TypeScript support was added later completely by accident, making the project name somewhat of a misnomer. But hey, sometimes the best features come from happy accidents, and now we're stuck with a name that only tells half the story!
+This project was originally intended as a demonstration of Python EDSL implementation using OCaml in the tagless-final style - hence the portmanteau "pyfinalo" (Python + Final + OCaml). JavaScript/TypeScript support was added later completely by accident, making the project name somewhat of a misnomer.
 
 ### Key Features
 
@@ -136,18 +136,18 @@ import pyfinalo from 'pyfinalo_js';
 import p from 'pyfinalo_js';
 
 // Direct evaluation
-const result = pyfinalo.show(pyfinalo.add(pyfinalo.int(5), pyfinalo.int(3)));
+const result = pyfinalo.show(p.add(p.int(5), p.int(3)));
 console.log(result); // Output: "8 : int"
 
 // String operations
-const strResult = pyfinalo.show(pyfinalo.len(pyfinalo.str("hello")));
+const strResult = pyfinalo.show(p.len(p.str("hello")));
 console.log(strResult); // Output: "5 : int"
 
 // Complex expressions
 const complex = pyfinalo.show(
-  pyfinalo.add(
-    pyfinalo.mul(pyfinalo.int(2), pyfinalo.int(3)),
-    pyfinalo.int(4)
+  p.add(
+    p.mul(p.int(2), p.int(3)),
+    p.int(4)
   )
 );
 console.log(complex); // Output: "10 : int"
