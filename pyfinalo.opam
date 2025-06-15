@@ -4,6 +4,8 @@ synopsis: "pyfinalo"
 depends: [
   "dune" {>= "3.7"}
   "pyml" {>= "20231101"}
+  "js_of_ocaml"
+  "js_of_ocaml-ppx"
   "alcotest" {with-test}
   "odoc" {with-doc}
 ]
