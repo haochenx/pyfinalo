@@ -1,0 +1,3 @@
+(cram
+ (deps %{bin:pyfinalo_py}
+  (glob_files *.py)))
