@@ -1,0 +1,3 @@
+(tests
+ (names lib_pyfinalo_unit_tests)
+ (libraries lib_pyfinalo alcotest))
