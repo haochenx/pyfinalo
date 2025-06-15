@@ -8,7 +8,7 @@ A demo project exploring tagless-final DSL implementation in OCaml with Python b
 
 ### A Note on the Name
 
-This project was originally intended as a demonstration of Python EDSL implementation using OCaml in the tagless-final style - hence the portmanteau "pyfinalo" (Python + Final + OCaml). JavaScript/TypeScript support was added later completely by accident, making the project name somewhat of a misnomer.
+This project was originally intended as a demonstration of Python eDSL implementation using OCaml in the tagless-final style - hence the portmanteau "pyfinalo" (Python + Final + OCaml). JavaScript/TypeScript support was added later completely by accident, making the project name somewhat of a misnomer.
 
 ### Key Features
 
