@@ -4,7 +4,7 @@ A research project exploring tagless-final DSL implementation in OCaml with Pyth
 
 ## Overview
 
-`pyfinalo` is an experimental domain-specific language (DSL) implementation with Python interoperability at its core. The project bridges functional programming concepts with Python accessibility, providing multiple interpreters that showcase different evaluation strategies and type checking behaviors.
+`pyfinalo` is an experimental domain-specific language (DSL) implementation that provides Python bindings for OCaml-based interpreters. The project bridges functional programming concepts with Python accessibility, providing multiple interpreters that showcase different evaluation strategies and type checking behaviors.
 
 ### Key Features
 
