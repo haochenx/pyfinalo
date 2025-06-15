@@ -4,13 +4,18 @@ A demo project exploring tagless-final DSL implementation in OCaml with Python b
 
 ## Overview
 
-`pyfinalo` is an experimental domain-specific language (DSL) implementation that showcases the feasibility to implement powerful eDSL usable in Python backed by implementation in OCaml in the tagless-final style. The project provides multiple interpreters including direct evaluation, AST construction, and explanatory type checking.
+`pyfinalo` is an experimental domain-specific language (DSL) implementation that showcases the feasibility to implement powerful eDSL usable in Python and JavaScript/TypeScript backed by implementation in OCaml in the tagless-final style. The project provides multiple interpreters including direct evaluation, AST construction, and explanatory type checking.
+
+### A Note on the Name
+
+This project was originally intended as a demonstration of Python eDSL implementation using OCaml in the tagless-final style - hence the portmanteau "pyfinalo" (Python + Final + OCaml). JavaScript/TypeScript support was added later completely by accident, making the project name somewhat of a misnomer.
 
 ### Key Features
 
 - **Tagless-Final Architecture**: Clean DSL implementation without intermediate abstract syntax trees
 - **Multiple Interpreters**: Direct evaluation, AST construction, and explanatory type checking
 - **Python Integration**: Seamless Python bindings via [pyml](https://github.com/ocamllibs/pyml)
+- **JavaScript/TypeScript Integration**: JavaScript bindings via [js_of_ocaml](https://ocsigen.org/js_of_ocaml/)
 - **Type Safety**: Demonstrates both well-typed and ill-typed expression handling
 - **Docker Support**: Containerized development and execution environment
 
@@ -18,9 +23,10 @@ A demo project exploring tagless-final DSL implementation in OCaml with Python b
 
 ### Prerequisites
 
-- **Python**: Version 3.9+ (tested with 3.9.13)
-- **OCaml**: Version 4.14.1 or compatible with pyml
+- **Python**: Version 3.9+ (tested with 3.9.13) - Note: Python bindings require OCaml < 5.3
+- **OCaml**: Version 4.14.1 or compatible with pyml and js_of_ocaml
 - **OPAM**: OCaml package manager
+- **Bun**: JavaScript runtime and package manager (for JavaScript bindings)
 
 ### Installation
 
@@ -81,31 +87,35 @@ A demo project exploring tagless-final DSL implementation in OCaml with Python b
    ./docker/build-dev.sh
    docker run -it pyfinalo-dev
    ```
+   
+   Note: The development container includes Bun for JavaScript/TypeScript development.
 
 ## Usage Examples
 
-### Direct Evaluation
+### Python
+
+#### Direct Evaluation
 ```python
 import pyfinalo as p
 result = p.show(p.add(p.len(p.str("hello")), p.int(3)))
 print(result)  # Output: 8
 ```
 
-### Concise Syntax
+#### Concise Syntax
 ```python
 from pyfinalo import *
 result = show(add(len(str("hello")), int(3)))
 print(result)  # Output: 8
 ```
 
-### AST Construction
+#### AST Construction
 ```python
 import pyfinalo_ast as p
 ast = p.show(p.add(p.len(p.str("hello")), p.int(3)))
 print(ast)  # Output: len("hello")+3
 ```
 
-### Type Checking with Explanation
+#### Type Checking with Explanation
 ```python
 import pyfinalo_explain as p
 
@@ -118,17 +128,73 @@ error = p.show(p.add(p.len(p.int(5)), p.int(3)))
 print(error)   # Output: len(5)+3 contains ill-typed subterm len(5)
 ```
 
+### JavaScript/TypeScript
+
+```javascript
+import pyfinalo from 'pyfinalo_js';
+// or alias for conciseness
+import p from 'pyfinalo_js';
+
+// Direct evaluation
+const result = pyfinalo.show(p.add(p.int(5), p.int(3)));
+console.log(result); // Output: "8 : int"
+
+// String operations
+const strResult = pyfinalo.show(p.len(p.str("hello")));
+console.log(strResult); // Output: "5 : int"
+
+// Complex expressions
+const complex = pyfinalo.show(
+  p.add(
+    p.mul(p.int(2), p.int(3)),
+    p.int(4)
+  )
+);
+console.log(complex); // Output: "10 : int"
+```
+
 ## Available Interpreters
 
+### Python Modules
 - **`pyfinalo`**: Direct value interpreter (`DirectValInterp`) - evaluates expressions immediately
 - **`pyfinalo_ast`**: AST interpreter (`UntypedAstInterp`) - generates abstract syntax trees
 - **`pyfinalo_explain`**: Explanatory interpreter (`ExplainInterpUntyped`) - provides detailed type checking
 
+### JavaScript/TypeScript Module
+- **`pyfinalo_js`**: Direct value interpreter available as an npm package (note: not published to npmjs.com)
+
+To use the JavaScript module in your project after building:
+```bash
+# After building in src/lib_pyfinalo_js
+cd your-project
+bun add file:../path/to/pyfinalo/src/lib_pyfinalo_js
+# or
+npm link ../path/to/pyfinalo/src/lib_pyfinalo_js
+```
+
 ## Development
+
+### Building JavaScript Bindings
+
+```bash
+# Install dependencies
+cd src/lib_pyfinalo_js
+bun install
+
+# Build the JavaScript module
+bun run build
+
+# Run JavaScript tests
+bun run test
+```
 
 ### Testing
 ```bash
+# OCaml tests (includes Python tests - cram tests under lib_pyfinalo_js/test)
 dune runtest
+
+# JavaScript tests
+cd src/lib_pyfinalo_js && bun test
 ```
 
 ### Project Structure
@@ -138,11 +204,13 @@ src/
 │   ├── lang.ml           # Language definitions and interpreters
 │   ├── interp.ml         # Interpreter implementations
 │   └── test/             # Tests
-└── bin_pyfinalo_py/      # Python bindings
-    ├── bin_pyfinalo_py.ml # Main executable
-    └── test/             # Integration tests
+├── bin_pyfinalo_py/      # Python bindings
+│   ├── bin_pyfinalo_py.ml # Main executable
+│   └── test/             # Integration tests
+└── lib_pyfinalo_js/      # JavaScript/TypeScript bindings
+    ├── lib_pyfinalo_js.ml # js_of_ocaml entry point
+    ├── wrapper.js        # JavaScript wrapper
+    ├── package.json      # NPM package configuration
+    └── test/             # JavaScript tests
 ```
 
-## Contributing
-
-This is a quick demo exploring DSL implementation patterns. Contributions, issues, and discussions about the tagless-final approach are welcome.

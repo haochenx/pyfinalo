@@ -68,3 +68,43 @@ jobs:
       run: |
         # Test built executable by running a simple script
         echo 'import pyfinalo as p; print(p.show(p.int(42)))' | docker run -i --rm pyfinalo-dev bash -c 'cd /home/opam/pyfinalo && eval $(opam env) && dune exec src/bin_pyfinalo_py/bin_pyfinalo_py.exe -'
+
+  js-build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: latest
+        
+    - name: Setup OCaml
+      uses: ocaml/setup-ocaml@v3
+      with:
+        ocaml-compiler: 5.1.0
+        
+    - name: Install OCaml dependencies
+      run: |
+        opam install . --deps-only
+        
+    - name: Install JS dependencies
+      working-directory: src/lib_pyfinalo_js
+      run: bun install
+      
+    - name: Build JavaScript library
+      working-directory: src/lib_pyfinalo_js
+      run: |
+        eval $(opam env)
+        bun run build
+      
+    - name: Run JavaScript tests
+      working-directory: src/lib_pyfinalo_js
+      run: bun run test
+      
+    - name: Verify build output
+      run: |
+        ls -la src/lib_pyfinalo_js/dist/
+        test -f src/lib_pyfinalo_js/dist/index.js
