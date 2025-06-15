@@ -43,14 +43,6 @@ end
 module _ : Lang.LangUntyped = UntypedAstInterp
 module _ : Lang.LangBase = UntypedAstInterp
 
-module type Consumer = sig
-  module Tgt : Lang.LangBase
-  type r
-  val consume : _ Tgt.repr -> r
-end
-
-type 'r consumer = (module Consumer with type r = 'r)
-
 module TypeChecking (Tgt : Lang.LangBase) = struct
   type ast = UntypedAst.ast
 
