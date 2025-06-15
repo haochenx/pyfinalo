@@ -10,5 +10,4 @@
   ;; for src/bin_pyfinalo
   ;; unnecessary otherwise
   (pyml (>= 20231101))
-  (ocaml (<= 4.14.1)) ; for pyml
 ))
