@@ -1,0 +1,16 @@
+{
+  "name": "pyfinalo_js",
+  "module": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "dune build . && tsup --config tsup.stage1.config.ts && tsup",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "tsup": "^8.5.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

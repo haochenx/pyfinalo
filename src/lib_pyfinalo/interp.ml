@@ -103,6 +103,12 @@ end
 module _ (Tgt : Lang.LangBase) : Lang.LangUntyped = TypeChecking(Tgt)
 module _ (Tgt : Lang.LangUntyped) : Lang.LangUntyped = TypeChecking(Tgt)
 
+module CheckingDirectValInterp = TypeChecking(DirectValInterp)
+
+(* module signature check *)
+module _ : Lang.LangUntyped = CheckingDirectValInterp
+module _ : Lang.LangBase = CheckingDirectValInterp
+
 module ExplainInterpTyped = struct
   type ast = UntypedAst.ast
   type 't repr = 't irepr * ast
