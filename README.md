@@ -24,7 +24,7 @@ This project was originally intended as a demonstration of Python eDSL implement
 ### Prerequisites
 
 - **Python**: Version 3.9+ (tested with 3.9.13) - Note: Python bindings require OCaml < 5.3
-- **OCaml**: Version 4.14.1 or compatible with pyml and js_of_ocaml
+- **OCaml**: Version 5.1 or compatible with pyml and js_of_ocaml
 - **OPAM**: OCaml package manager
 - **Bun**: JavaScript runtime and package manager (for JavaScript bindings)
 
@@ -36,8 +36,8 @@ This project was originally intended as a demonstration of Python eDSL implement
 
 2. **Setup OCaml Environment**:
    ```bash
-   opam switch create 4.14.1
-   eval $(opam env --switch=4.14.1 --set-switch)
+   opam switch create 5.1
+   eval $(opam env --switch=5.1 --set-switch)
    ```
 
 3. **Install Dependencies**:
