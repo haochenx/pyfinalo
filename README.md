@@ -1,15 +1,15 @@
 # pyfinalo
 
-A research project exploring tagless-final DSL implementation in OCaml with Python bindings.
+A demo project exploring tagless-final DSL implementation in OCaml with Python bindings.
 
 ## Overview
 
-`pyfinalo` is an experimental domain-specific language (DSL) implementation that bridges functional programming concepts with Python accessibility through seamless OCaml-Python interoperability. The project provides multiple interpreters that showcase different evaluation strategies and type checking behaviors.
+`pyfinalo` is an experimental domain-specific language (DSL) implementation that showcases the feasibility to implement powerful eDSL usable in Python backed by implementation in OCaml in the tagless-final style. The project provides multiple interpreters including direct evaluation, AST construction, and explanatory type checking.
 
 ### Key Features
 
 - **Tagless-Final Architecture**: Clean DSL implementation without intermediate abstract syntax trees
-- **Multiple Interpreters**: Direct evaluation, AST generation, and explanatory type checking
+- **Multiple Interpreters**: Direct evaluation, AST construction, and explanatory type checking
 - **Python Integration**: Seamless Python bindings via [pyml](https://github.com/ocamllibs/pyml)
 - **Type Safety**: Demonstrates both well-typed and ill-typed expression handling
 - **Docker Support**: Containerized development and execution environment
@@ -137,7 +137,7 @@ src/
 ├── lib_pyfinalo/          # Core DSL implementation
 │   ├── lang.ml           # Language definitions and interpreters
 │   ├── interp.ml         # Interpreter implementations
-│   └── test/             # Unit tests
+│   └── test/             # Tests
 └── bin_pyfinalo_py/      # Python bindings
     ├── bin_pyfinalo_py.ml # Main executable
     └── test/             # Integration tests
