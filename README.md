@@ -6,6 +6,10 @@ A demo project exploring tagless-final DSL implementation in OCaml with Python b
 
 `pyfinalo` is an experimental domain-specific language (DSL) implementation that showcases the feasibility to implement powerful eDSL usable in Python and JavaScript/TypeScript backed by implementation in OCaml in the tagless-final style. The project provides multiple interpreters including direct evaluation, AST construction, and explanatory type checking.
 
+### A Note on the Name
+
+This project was originally intended as a demonstration of Python EDSL implementation using OCaml in the tagless-final style - hence the portmanteau "pyfinalo" (Python + Final + OCaml). JavaScript/TypeScript support was added later completely by accident, making the project name somewhat of a misnomer. But hey, sometimes the best features come from happy accidents, and now we're stuck with a name that only tells half the story!
+
 ### Key Features
 
 - **Tagless-Final Architecture**: Clean DSL implementation without intermediate abstract syntax trees
@@ -128,6 +132,8 @@ print(error)   # Output: len(5)+3 contains ill-typed subterm len(5)
 
 ```javascript
 import pyfinalo from 'pyfinalo_js';
+// or alias for conciseness
+import p from 'pyfinalo_js';
 
 // Direct evaluation
 const result = pyfinalo.show(pyfinalo.add(pyfinalo.int(5), pyfinalo.int(3)));
@@ -155,7 +161,16 @@ console.log(complex); // Output: "10 : int"
 - **`pyfinalo_explain`**: Explanatory interpreter (`ExplainInterpUntyped`) - provides detailed type checking
 
 ### JavaScript/TypeScript Module
-- **`pyfinalo_js`**: Direct value interpreter available as an npm package
+- **`pyfinalo_js`**: Direct value interpreter available as an npm package (note: not published to npmjs.com)
+
+To use the JavaScript module in your project after building:
+```bash
+# After building in src/lib_pyfinalo_js
+cd your-project
+bun add file:../path/to/pyfinalo/src/lib_pyfinalo_js
+# or
+npm link ../path/to/pyfinalo/src/lib_pyfinalo_js
+```
 
 ## Development
 
@@ -170,12 +185,12 @@ bun install
 bun run build
 
 # Run JavaScript tests
-bun test
+bun run test
 ```
 
 ### Testing
 ```bash
-# OCaml tests
+# OCaml tests (includes Python tests - cram tests under lib_pyfinalo_js/test)
 dune runtest
 
 # JavaScript tests
@@ -199,6 +214,3 @@ src/
     └── test/             # JavaScript tests
 ```
 
-## Contributing
-
-This is a quick demo exploring DSL implementation patterns. Contributions, issues, and discussions about the tagless-final approach are welcome.
