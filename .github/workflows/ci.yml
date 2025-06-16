@@ -108,3 +108,8 @@ jobs:
       run: |
         ls -la src/lib_pyfinalo_js/dist/
         test -f src/lib_pyfinalo_js/dist/index.js
+
+    - name: Build webapp
+      run: |
+        eval $(opam env)
+        make build-webapp
