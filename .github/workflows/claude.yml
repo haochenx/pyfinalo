@@ -35,6 +35,7 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           model: claude-opus-4-20250514
+          allowed_tools: "Bash(git:*),Bash(make:*),Bash(gh issue view:*),Bash(gh pr checks:*),Bash(gh pr view:*),Bash(gh run view:*)"
 
           # Optional: Specify model (defaults to Claude Sonnet 4, uncomment for Claude Opus 4)
           # model: "claude-opus-4-20250514"
