@@ -21,7 +21,7 @@ This project was originally intended as a demonstration of Python eDSL implement
 
 ## Web REPL
 
-Try pyfinalo in your browser! We've deployed an interactive web REPL that lets you experiment with both Python and JavaScript bindings without any installation:
+Try pyfinalo in your browser! We've deployed an experimental web REPL that lets you experiment with both Python and JavaScript bindings without any installation:
 
 **🌐 [https://pyfinalo-webapp.pages.dev/](https://pyfinalo-webapp.pages.dev/)**
 
