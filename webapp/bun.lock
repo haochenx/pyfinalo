@@ -36,6 +36,7 @@
     "repl-js": {
       "name": "pyfinalo-repl-js",
       "dependencies": {
+        "pyfinalo_js": "../../src/lib_pyfinalo_js",
         "pyfinalo_js": "file:../../src/lib_pyfinalo_js",
       },
       "devDependencies": {
@@ -1080,6 +1081,8 @@
     "pretty-format/ansi-styles": ["ansi-styles@5.2.0", "", {}, "sha512-Cxwpt2SfTzTtXcfOlzGEee8O+c+MmUgGrNiBcXnuWxuFJHe6a5Hz7qwhwe5OgaSYI0IJvkLqWX1ASG+cJOkEiA=="],
 
     "proxy-agent/lru-cache": ["lru-cache@7.18.3", "", {}, "sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA=="],
+
+    "pyfinalo-repl-js/pyfinalo_js": ["pyfinalo_js@file:../src/lib_pyfinalo_js", { "devDependencies": { "@types/bun": "latest", "tsup": "^8.5.0" }, "peerDependencies": { "typescript": "^5.0.0" } }],
 
     "pyfinalo-repl-js/pyfinalo_js": ["pyfinalo_js@file:../src/lib_pyfinalo_js", { "devDependencies": { "@types/bun": "latest", "tsup": "^8.5.0" }, "peerDependencies": { "typescript": "^5.0.0" } }],
 

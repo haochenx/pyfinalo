@@ -8,7 +8,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "pyfinalo_js": "file:../../src/lib_pyfinalo_js"
+    "pyfinalo_js": "../../src/lib_pyfinalo_js"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

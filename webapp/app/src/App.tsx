@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import CodeEditor from './components/CodeEditor'
+import { runtimeLoader } from './lib/runtimeLoader'
 import './App.css'
 
 type Runtime = 'python' | 'javascript'
@@ -10,17 +11,48 @@ function App() {
 # Try: str("hello") + str(" world")`)
   const [output, setOutput] = useState('')
   const [isRunning, setIsRunning] = useState(false)
+  const [isLoadingRuntime, setIsLoadingRuntime] = useState(false)
+  const loadedRuntimes = useRef<Set<Runtime>>(new Set())
 
   const handleRun = async () => {
     setIsRunning(true)
     setOutput('Running...')
-    
-    // TODO: Implement actual code execution
-    setTimeout(() => {
-      setOutput('Output will appear here when you run your code')
+
+    try {
+      // Load runtime if not already loaded
+      if (!loadedRuntimes.current.has(runtime)) {
+        setIsLoadingRuntime(true)
+        setOutput('Loading runtime...')
+      }
+
+      const runtimeModule = runtime === 'javascript'
+        ? await runtimeLoader.loadJavaScript()
+        : await runtimeLoader.loadPython()
+
+      loadedRuntimes.current.add(runtime)
+      setIsLoadingRuntime(false)
+
+      // Execute the code
+      const result = await runtimeModule.evaluate(code)
+      setOutput(result)
+    } catch (error) {
+      setOutput(`Error: ${error.message}`)
+    } finally {
       setIsRunning(false)
-    }, 1000)
+      setIsLoadingRuntime(false)
+    }
   }
+
+  // Update default code when runtime changes
+  useEffect(() => {
+    if (runtime === 'python') {
+      setCode(`# Welcome to pyfinalo REPL
+# Try: str("hello") + str(" world")\n`)
+    } else {
+      setCode(`// Welcome to pyfinalo REPL
+// Try: add(str("hello"), str(" world"))\n`)
+    }
+  }, [runtime])
 
   return (
     <div className="app">
@@ -33,15 +65,15 @@ function App() {
             <option value="javascript">JavaScript</option>
           </select>
         </div>
-        <button 
-          className="run-button" 
+        <button
+          className="run-button"
           onClick={handleRun}
-          disabled={isRunning}
+          disabled={isRunning || isLoadingRuntime}
         >
-          Run Code
+          {isLoadingRuntime ? 'Loading Runtime...' : isRunning ? 'Running...' : 'Run Code'}
         </button>
       </header>
-      
+
       <main className="app-main">
         <div className="editor-section">
           <CodeEditor
@@ -51,7 +83,7 @@ function App() {
             disabled={isRunning}
           />
         </div>
-        
+
         <div className="output-section">
           <h3>Output</h3>
           <pre className="output">{output}</pre>
