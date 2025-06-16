@@ -55,7 +55,7 @@ export const runtimeLoader: RuntimeLoader = {
       
       return jsReplModule;
     } catch (error) {
-      throw new Error(`Failed to load JavaScript runtime: ${error.message}`);
+      throw new Error(`Failed to load JavaScript runtime: ${error instanceof Error ? error.message : String(error)}`);
     }
   },
 
@@ -99,7 +99,7 @@ export const runtimeLoader: RuntimeLoader = {
       
       return pythonReplModule;
     } catch (error) {
-      throw new Error(`Failed to load Python runtime: ${error.message}`);
+      throw new Error(`Failed to load Python runtime: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 };

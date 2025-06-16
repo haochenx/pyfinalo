@@ -36,7 +36,7 @@ function App() {
       const result = await runtimeModule.evaluate(code)
       setOutput(result)
     } catch (error) {
-      setOutput(`Error: ${error.message}`)
+      setOutput(`Error: ${error instanceof Error ? error.message : String(error)}`)
     } finally {
       setIsRunning(false)
       setIsLoadingRuntime(false)

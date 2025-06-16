@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "CLOUDFLARE_ACCOUNT_ID=35cf20265bc941f70837556f95d19853 npx wrangler pages deploy dist"
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.4",
