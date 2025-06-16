@@ -1,20 +1,7 @@
-import { defineConfig } from 'vite';
-import solid from 'vite-plugin-solid';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
+// https://vite.dev/config/
 export default defineConfig({
-  plugins: [solid()],
-  build: {
-    outDir: 'dist',
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'editor': ['@uiw/solid-codemirror', '@codemirror/lang-python', '@codemirror/lang-javascript'],
-          'themes': ['@uiw/codemirror-themes']
-        }
-      }
-    }
-  },
-  server: {
-    port: 3000
-  }
-});
+  plugins: [react()],
+})

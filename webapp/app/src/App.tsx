@@ -1,39 +1,64 @@
-import { Component, createSignal, Show } from 'solid-js';
-import Header from './components/Header';
-import CodeEditor from './components/CodeEditor';
-import OutputPanel from './components/OutputPanel';
-import ReplLoader from './components/ReplLoader';
-import { ReplContext, ReplContextProvider } from './lib/ReplContext';
-import './App.css';
+import { useState } from 'react'
+import CodeEditor from './components/CodeEditor'
+import './App.css'
 
-const App: Component = () => {
-  const [code, setCode] = createSignal('# Welcome to pyfinalo REPL\n# Try: str("hello") + str(" world")');
-  const [output, setOutput] = createSignal('');
-  const [isRunning, setIsRunning] = createSignal(false);
+type Runtime = 'python' | 'javascript'
+
+function App() {
+  const [runtime, setRuntime] = useState<Runtime>('python')
+  const [code, setCode] = useState(`# Welcome to pyfinalo REPL
+# Try: str("hello") + str(" world")`)
+  const [output, setOutput] = useState('')
+  const [isRunning, setIsRunning] = useState(false)
+
+  const handleRun = async () => {
+    setIsRunning(true)
+    setOutput('Running...')
+    
+    // TODO: Implement actual code execution
+    setTimeout(() => {
+      setOutput('Output will appear here when you run your code')
+      setIsRunning(false)
+    }, 1000)
+  }
 
   return (
-    <ReplContextProvider>
-      <div class="app">
-        <Header />
-        <ReplLoader />
-        <div class="main-content">
-          <div class="editor-panel">
-            <CodeEditor
-              value={code()}
-              onChange={setCode}
-              disabled={isRunning()}
-            />
-          </div>
-          <div class="output-panel">
-            <OutputPanel
-              output={output()}
-              isRunning={isRunning()}
-            />
-          </div>
+    <div className="app">
+      <header className="app-header">
+        <h1>pyfinalo REPL</h1>
+        <div className="runtime-selector">
+          <label>Runtime:</label>
+          <select value={runtime} onChange={(e) => setRuntime(e.target.value as Runtime)}>
+            <option value="python">Python (Pyodide)</option>
+            <option value="javascript">JavaScript</option>
+          </select>
         </div>
-      </div>
-    </ReplContextProvider>
-  );
-};
+        <button 
+          className="run-button" 
+          onClick={handleRun}
+          disabled={isRunning}
+        >
+          Run Code
+        </button>
+      </header>
+      
+      <main className="app-main">
+        <div className="editor-section">
+          <CodeEditor
+            value={code}
+            onChange={setCode}
+            language={runtime}
+            disabled={isRunning}
+          />
+        </div>
+        
+        <div className="output-section">
+          <h3>Output</h3>
+          <pre className="output">{output}</pre>
+        </div>
+      </main>
+    </div>
+  )
+}
 
-export default App;
+export default App
