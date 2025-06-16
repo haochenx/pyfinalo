@@ -84,7 +84,7 @@ Usage:
 
 Available modules:
   pyfinalo         - Direct value interpreter
-  pyfinalo_ast     - Untyped AST interpreter  
+  pyfinalo_ast     - Untyped AST interpreter
   pyfinalo_explain - Explaining interpreter with type error messages
 
 Example:
