@@ -8,6 +8,14 @@ interface RuntimeLoader {
   loadPython: () => Promise<RuntimeModule>;
 }
 
+// Extend window interface for REPL modules
+declare global {
+  interface Window {
+    createJavaScriptRepl?: () => { evaluate: (code: string) => string };
+    createPythonRepl?: () => Promise<{ evaluate: (code: string) => Promise<string>; ready?: Promise<void> }>;
+  }
+}
+
 // Cache loaded modules
 let jsReplModule: RuntimeModule | null = null;
 let pythonReplModule: RuntimeModule | null = null;
@@ -26,17 +34,21 @@ export const runtimeLoader: RuntimeLoader = {
         return jsReplModule;
       }
 
-      // Production mode - load real bundles via script tags
-      await loadScript('/repl-bundles/pyfinalo_js.js', 'pyfinalo_js');
-      await loadScript('/repl-bundles/js-repl.js', 'PyfinaloJsRepl');
+      // Load via script tag
+      await loadScript('/repl-bundles/js-repl-loader.js');
       
-      // Access the loaded module from global scope
-      const createJavaScriptRepl = (window as any).PyfinaloJsRepl?.createJavaScriptRepl;
-      if (!createJavaScriptRepl) {
-        throw new Error('JavaScript REPL module not found on window.PyfinaloJsRepl');
+      // Wait for the module to be available on window
+      let attempts = 0;
+      while (!window.createJavaScriptRepl && attempts < 50) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        attempts++;
       }
       
-      const repl = createJavaScriptRepl();
+      if (!window.createJavaScriptRepl) {
+        throw new Error('JavaScript REPL module not found on window.createJavaScriptRepl');
+      }
+      
+      const repl = window.createJavaScriptRepl();
       jsReplModule = {
         evaluate: (code: string) => repl.evaluate(code)
       };
@@ -61,16 +73,21 @@ export const runtimeLoader: RuntimeLoader = {
         return pythonReplModule;
       }
 
-      // Production mode - load via script tag
-      await loadScript('/repl-bundles/python-repl.js', 'PyfinaloJsRepl');
+      // Load via script tag
+      await loadScript('/repl-bundles/python-repl-loader.js');
       
-      // Access the loaded module from global scope
-      const createPythonRepl = (window as any).PyfinaloJsRepl?.createPythonRepl;
-      if (!createPythonRepl) {
-        throw new Error('Python REPL module not found on window.PyfinaloJsRepl');
+      // Wait for the module to be available on window
+      let attempts = 0;
+      while (!window.createPythonRepl && attempts < 50) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        attempts++;
       }
       
-      const repl = await createPythonRepl();
+      if (!window.createPythonRepl) {
+        throw new Error('Python REPL module not found on window.createPythonRepl');
+      }
+      
+      const repl = await window.createPythonRepl();
       if (repl.ready) {
         await repl.ready;
       }
@@ -88,10 +105,11 @@ export const runtimeLoader: RuntimeLoader = {
 };
 
 // Helper function to load scripts dynamically
-function loadScript(src: string, globalName?: string): Promise<void> {
+function loadScript(src: string): Promise<void> {
   return new Promise((resolve, reject) => {
-    // Check if already loaded
-    if (globalName && (window as any)[globalName]) {
+    // Check if script already exists
+    const existing = document.querySelector(`script[src="${src}"]`);
+    if (existing) {
       resolve();
       return;
     }

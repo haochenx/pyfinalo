@@ -21,5 +21,9 @@ export default defineConfig({
       // Ensure these are treated as external in production
       external: ['/repl-bundles/js-repl.js', '/repl-bundles/python-repl.js', '/repl-bundles/pyfinalo_js.js']
     }
+  },
+  optimizeDeps: {
+    // Exclude the REPL bundles from dependency optimization
+    exclude: ['pyfinalo_js']
   }
 })

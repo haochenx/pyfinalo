@@ -44,11 +44,11 @@ export function createJavaScriptRepl(): JavaScriptRepl {
           const _str = (value) => new Expr(str(value));
           const _int = (value) => new Expr(int(value));
           
-          // Evaluate user code
-          ${code}
+          // Evaluate user code and return the result
+          return (() => { ${code} })();
           `
         );
-        
+
         // Run the function with pyfinalo bindings
         const result = func(
           pyfinalo.str,
@@ -59,7 +59,7 @@ export function createJavaScriptRepl(): JavaScriptRepl {
           pyfinalo.show,
           pyfinalo
         );
-        
+
         // Convert result to string
         if (result === undefined) {
           return 'undefined';
