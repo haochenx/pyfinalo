@@ -1,0 +1,38 @@
+.code-editor {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #333;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.editor-header {
+  padding: 10px 15px;
+  background-color: #2a2a2a;
+  border-bottom: 1px solid #333;
+}
+
+.editor-title {
+  font-size: 0.9rem;
+  color: #999;
+}
+
+.code-editor .cm-editor {
+  flex: 1;
+  height: 100%;
+}
+
+.code-mirror-flex {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.code-mirror-flex .cm-editor {
+  flex: 1;
+}
+
+.code-editor .cm-scroller {
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+}

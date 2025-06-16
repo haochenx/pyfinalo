@@ -88,7 +88,7 @@ jobs:
 
     - name: Install OCaml dependencies
       run: |
-        opam install . --deps-only
+        opam install . --deps-only --with-test
 
     - name: Install JS dependencies
       working-directory: src/lib_pyfinalo_js
@@ -108,3 +108,8 @@ jobs:
       run: |
         ls -la src/lib_pyfinalo_js/dist/
         test -f src/lib_pyfinalo_js/dist/index.js
+
+    - name: Build webapp
+      run: |
+        eval $(opam env)
+        make build-webapp

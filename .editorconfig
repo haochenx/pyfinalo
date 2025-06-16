@@ -29,3 +29,17 @@ indent_style = tab
 
 [*.md]
 trim_trailing_whitespace = false
+
+# Exclude generated/symlinked files
+[webapp/app/public/repl-bundles/{js-repl.js,python-repl.js}]
+indent_style = unset
+end_of_line = unset
+insert_final_newline = unset
+trim_trailing_whitespace = unset
+
+# Exclude cram test files
+[*.t]
+indent_style = unset
+end_of_line = unset
+insert_final_newline = unset
+trim_trailing_whitespace = unset

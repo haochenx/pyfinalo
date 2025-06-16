@@ -18,6 +18,20 @@ This project was originally intended as a demonstration of Python eDSL implement
 - **JavaScript/TypeScript Integration**: JavaScript bindings via [js_of_ocaml](https://ocsigen.org/js_of_ocaml/)
 - **Docker Support**: Containerized development and execution environment
 
+## Web REPL
+
+Try pyfinalo in your browser! We've deployed an experimental web REPL that lets you experiment with both Python and JavaScript bindings without any installation:
+
+**🌐 [https://pyfinalo-webapp.pages.dev/](https://pyfinalo-webapp.pages.dev/)**
+
+The web REPL features:
+- **Dual Runtime Support**: Switch between Python (via Pyodide) and JavaScript execution
+- **Interactive Code Editor**: Syntax highlighting and responsive design
+- **Real-time Execution**: Run pyfinalo expressions directly in your browser
+- **No Installation Required**: Everything runs client-side
+
+*Note: The web REPL currently provides only the type-checked direct evaluation interpreter. AST construction and explanatory interpreters are available in the native installations below.*
+
 ## Quick Start
 
 ### Prerequisites

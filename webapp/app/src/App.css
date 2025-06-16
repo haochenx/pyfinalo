@@ -1,0 +1,125 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #0a0a0a;
+  color: #ffffff;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #1a1a1a;
+  border-bottom: 1px solid #333;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.runtime-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.runtime-selector select {
+  padding: 5px 10px;
+  background-color: #2a2a2a;
+  color: white;
+  border: 1px solid #444;
+  border-radius: 4px;
+}
+
+.run-button {
+  padding: 8px 20px;
+  background-color: #007acc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.run-button:hover:not(:disabled) {
+  background-color: #005a9e;
+}
+
+.run-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.github-link {
+  padding: 8px 16px;
+  background-color: #333;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.github-link:hover {
+  background-color: #555;
+}
+
+.app-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+.editor-section, .output-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.output-section h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.output {
+  flex: 1;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 15px;
+  margin: 0;
+  font-family: monospace;
+  overflow-y: auto;
+}
+
+.app-footer {
+  padding: 15px 20px;
+  background-color: #1a1a1a;
+  border-top: 1px solid #333;
+  text-align: center;
+}
+
+.app-footer p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #999;
+}
+
+.app-footer a {
+  color: #007acc;
+  text-decoration: none;
+}
+
+.app-footer a:hover {
+  text-decoration: underline;
+}
