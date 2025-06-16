@@ -25,7 +25,7 @@ This project was originally intended as a demonstration of Python eDSL implement
 
 > ⚠️ **OCaml 5.3 Compatibility Warning**
 >
-> OCaml 5.3 is not currently supported due to compatibility issues with pyml. Please use OCaml 5.1 or 5.2 until [stdcompat issue #36](https://github.com/ocamllibs/stdcompat/issues/36) is resolved.
+> Avoid OCaml 5.3 (or later) due to compatibility issues with pyml. This is caused by [stdcompat issue #36](https://github.com/ocamllibs/stdcompat/issues/36) in stdcompat, a dependency of pyml. After this issue is resolved, a new version of stdcompat containing the fix needs to be released to opam before OCaml 5.3+ can be supported.
 
 - **Python**: Version 3.9+ (tested with 3.9.13) - Note: Python bindings require OCaml < 5.3
 - **OCaml**: Version 5.1 or compatible with pyml and js_of_ocaml
