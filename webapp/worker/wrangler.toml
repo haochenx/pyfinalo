@@ -1,0 +1,26 @@
+name = "pyfinalo-webapp"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+# R2 bucket binding for REPL assets
+[[r2_buckets]]
+binding = "REPL_ASSETS"
+bucket_name = "pyfinalo-repl-assets"
+
+# Static site configuration
+[site]
+bucket = "../app/dist"
+
+# Environment variables
+[vars]
+ENVIRONMENT = "production"
+
+# Routes
+routes = [
+  { pattern = "pyfinalo.app/*", zone_name = "pyfinalo.app" }
+]
+
+# Development settings
+[dev]
+port = 8787
+local_protocol = "http"
