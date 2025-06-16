@@ -5,7 +5,7 @@ let to_string_of_pp vpp x =
   Format.asprintf "%a" vpp x
 
 module Register (L : Lang.LangBase)
-         (P: sig
+    (P: sig
               val desc : string
               val string_of_repr : _ L.repr -> string
             end) = struct

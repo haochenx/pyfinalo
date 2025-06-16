@@ -9,35 +9,35 @@ on:
 jobs:
   docker-build-and-test:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
     - name: Build end-user Docker image
       run: ./docker/build.sh
-      
+
     - name: Test basic functionality
       run: |
         result=$(echo 'import pyfinalo as p; print(p.show(p.add(p.len(p.str("hello")), p.int(3))))' | docker run -i --rm pyfinalo pyfinalo_py -)
         echo "Result: $result"
         [ "$result" = "8" ]
-        
+
     - name: Test all interpreter variants
       run: |
         # Test DirectValInterp
         echo 'import pyfinalo as p; print("DirectVal:", p.show(p.add(p.len(p.str("test")), p.int(1))))' | docker run -i --rm pyfinalo pyfinalo_py -
-        
-        # Test UntypedAstInterp  
+
+        # Test UntypedAstInterp
         echo 'import pyfinalo_ast as p; print("AST:", p.show(p.add(p.len(p.str("test")), p.int(1))))' | docker run -i --rm pyfinalo pyfinalo_py -
-        
+
         # Test ExplainInterpUntyped
         echo 'import pyfinalo_explain as p; print("Explain:", p.show(p.add(p.len(p.str("test")), p.int(1))))' | docker run -i --rm pyfinalo pyfinalo_py -
-        
+
     - name: Test type error handling
       run: |
         echo 'import pyfinalo_explain as p; print(p.show(p.len(p.int(5))))' | docker run -i --rm pyfinalo pyfinalo_py -
-        
+
     - name: Verify image size
       run: |
         SIZE=$(docker images pyfinalo:latest --format "{{.Size}}")
@@ -46,24 +46,24 @@ jobs:
 
   docker-dev-build:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
     - name: Build development Docker image
       run: ./docker/build-dev.sh
-      
+
     - name: Test development environment build
       run: |
         # Test that we can build inside the dev container
         docker run --rm pyfinalo-dev bash -c 'cd /home/opam/pyfinalo && eval $(opam env) && dune build'
-        
+
     - name: Run tests in development environment
       run: |
         # Run dune runtest to execute test suite
         docker run --rm pyfinalo-dev bash -c 'cd /home/opam/pyfinalo && eval $(opam env) && dune runtest'
-        
+
     - name: Test development environment executable
       run: |
         # Test built executable by running a simple script
@@ -71,39 +71,39 @@ jobs:
 
   js-build-and-test:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
     - name: Setup Bun
       uses: oven-sh/setup-bun@v2
       with:
         bun-version: latest
-        
+
     - name: Setup OCaml
       uses: ocaml/setup-ocaml@v3
       with:
         ocaml-compiler: 5.1.0
-        
+
     - name: Install OCaml dependencies
       run: |
         opam install . --deps-only
-        
+
     - name: Install JS dependencies
       working-directory: src/lib_pyfinalo_js
       run: bun install
-      
+
     - name: Build JavaScript library
       working-directory: src/lib_pyfinalo_js
       run: |
         eval $(opam env)
         bun run build
-      
+
     - name: Run JavaScript tests
       working-directory: src/lib_pyfinalo_js
       run: bun run test
-      
+
     - name: Verify build output
       run: |
         ls -la src/lib_pyfinalo_js/dist/
