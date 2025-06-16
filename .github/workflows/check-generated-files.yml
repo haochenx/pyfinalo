@@ -7,25 +7,25 @@ on:
 jobs:
   check-opam-files:
     runs-on: ubuntu-latest
-
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-
+      
     - name: Setup OCaml
       uses: ocaml/setup-ocaml@v3
       with:
         ocaml-compiler: 5.1.0
-
+        
     - name: Install dependencies
       run: |
         opam install . --deps-only
-
+        
     - name: Check if opam files are up-to-date
       run: |
         # Generate opam files
         opam exec -- dune build @install
-
+        
         # Check if any opam files were modified
         if ! git diff --exit-code *.opam; then
           echo "::error::Generated opam files are not up-to-date. Please run 'dune build @install' and commit the changes."
@@ -33,5 +33,5 @@ jobs:
           git diff --name-only *.opam
           exit 1
         fi
-
+        
         echo "✅ All generated opam files are up-to-date"
