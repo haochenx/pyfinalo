@@ -124,16 +124,30 @@ async function checkEditorConfig() {
 async function checkDependencies() {
   info("Checking dependency consistency...");
   
-  // Check bun.lockb or bun.lock exists
-  const jsDir = "src/lib_pyfinalo_js";
-  if (existsSync(join(jsDir, "package.json"))) {
-    if (!existsSync(join(jsDir, "bun.lockb")) && !existsSync(join(jsDir, "bun.lock"))) {
-      error(`${jsDir}/bun.lock[b] missing. Run 'cd ${jsDir} && bun install'`);
-    } else {
-      success("Dependency lock files present");
+  const dirsToCheck = ["src/lib_pyfinalo_js", "scripts"];
+  let allGood = true;
+  
+  for (const dir of dirsToCheck) {
+    if (existsSync(join(dir, "package.json"))) {
+      // Check lock file exists
+      if (!existsSync(join(dir, "bun.lockb")) && !existsSync(join(dir, "bun.lock"))) {
+        error(`${dir}/bun.lock[b] missing. Run 'cd ${dir} && bun install'`);
+        allGood = false;
+        continue;
+      }
+      
+      // Check if lock file is up-to-date
+      console.log(`Checking ${dir} dependencies...`);
+      const result = await $`cd ${dir} && bun install --frozen-lockfile`.nothrow();
+      if (result.exitCode !== 0) {
+        error(`${dir}/bun.lock[b] is out of date. Run 'cd ${dir} && bun install'`);
+        allGood = false;
+      }
     }
-  } else {
-    success("No package.json to check");
+  }
+  
+  if (allGood) {
+    success("All dependency lock files present and up-to-date");
   }
 }
 
