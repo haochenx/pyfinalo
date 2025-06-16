@@ -30,9 +30,9 @@ function createJavaScriptRepl() {
       if (isSimpleExpression) {
         // Wrap in return statement to capture the value
         if (code.includes("show(")) {
-          return originalRepl.evaluate(`return (${code})`);
+          return originalRepl.evaluate(`return (\n${code}\n)`);
         } else {
-          return originalRepl.evaluate(`return show(${code})`);
+          return originalRepl.evaluate(`return show(\n${code}\n)`);
         }
       } else {
         // For complex code, let it handle its own returns

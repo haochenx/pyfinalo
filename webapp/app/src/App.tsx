@@ -46,11 +46,11 @@ function App() {
   // Update default code when runtime changes
   useEffect(() => {
     if (runtime === 'python') {
-      setCode(`# Welcome to pyfinalo REPL
-# Try: str("hello") + str(" world")\n`)
+      setCode(`# Welcome to pyfinalo_py REPL
+# Try: print(show(add(len(str("hello")), int(3))))\n`)
     } else {
-      setCode(`// Welcome to pyfinalo REPL
-// Try: add(str("hello"), str(" world"))\n`)
+      setCode(`// Welcome to pyfinalo_js REPL
+// Try: add(len(str("hello")), int(3))\n`)
     }
   }, [runtime])
 
