@@ -26,6 +26,8 @@ test:
 clean:
 	dune clean
 	cd src/lib_pyfinalo_js && rm -rf dist node_modules
+	cd scripts && rm -rf node_modules
+	./scripts/check-dev-containers-cleaned.sh
 
 # Audit targets
 audit: scripts/node_modules
