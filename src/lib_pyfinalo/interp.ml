@@ -140,20 +140,20 @@ module ExplainInterpUntyped = struct
   let explain (v, term) =
     match v with
     | Checker.Ill_typed sub when sub = term ->
-       Format.asprintf "%a is ill-typed"
-         pp_urepr term
+      Format.asprintf "%a is ill-typed"
+        pp_urepr term
     | Checker.Ill_typed sub ->
-       Format.asprintf "%a contains ill-typed subterm %a"
-         pp_urepr term
-         pp_urepr sub
+      Format.asprintf "%a contains ill-typed subterm %a"
+        pp_urepr term
+        pp_urepr sub
     | Checker.Int_typed (v, _) ->
-       Format.asprintf "%a evaluates to integer %a"
-         pp_urepr term
-         pp_irepr v
+      Format.asprintf "%a evaluates to integer %a"
+        pp_urepr term
+        pp_irepr v
     | Checker.String_typed (v, _) ->
-       Format.asprintf "%a evaluates to string %a"
-         pp_urepr term
-         pp_irepr v
+      Format.asprintf "%a evaluates to string %a"
+        pp_urepr term
+        pp_irepr v
     | _ -> .
 
   let int x = Checker.int x, UntypedAstInterp.int x

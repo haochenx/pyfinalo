@@ -4,10 +4,10 @@ let to_string_of_pp vpp x =
   Format.asprintf "%a" vpp x
 
 module Register (L : Lang.LangBase)
-         (P: sig
-              val desc : string
-              val string_of_repr : _ L.repr -> string
-            end) = struct
+    (P: sig
+      val desc : string
+      val string_of_repr : _ L.repr -> string
+    end) = struct
 
   let cap', decap' = Py.Capsule.make P.desc
 
@@ -21,7 +21,7 @@ module Register (L : Lang.LangBase)
         |> P.string_of_repr
         |> Py.String.of_string
       )[@warning "-8"]
-       |> Py.Callable.of_function
+      |> Py.Callable.of_function
       );
 
     Py.Module.set m "str" (
@@ -74,7 +74,7 @@ let () =
 
   match Sys.argv |> Array.to_list with
   | _ :: ("--help" | "-h") :: _ ->
-     let help_text = {|pyfinalo_py - Tagless-final DSL exposed to Python
+    let help_text = {|pyfinalo_py - Tagless-final DSL exposed to Python
 
 Usage:
   pyfinalo_py              Start interactive Python REPL
@@ -90,13 +90,13 @@ Available modules:
 Example:
   import pyfinalo as p
   print(p.show(p.add(p.len(p.str("hello")), p.int(3))))|} in
-     print_endline help_text
+    print_endline help_text
   | _ :: "-" :: _ -> Py.Run.any_file (Channel stdin) "stdin" |> ignore
   | _ ->
-     let greetings =
-       {|== Pyfinalo Python REPL ==
+    let greetings =
+      {|== Pyfinalo Python REPL ==
 Try `import pyfinalo         as p; print(p.show(p.add(p.len(p.str("hello")), p.int(3))))`
 Or `import pyfinalo_ast     as p; print(p.show(p.add(p.len(p.str("hello")), p.int(3))))`
 Or `import pyfinalo_explain as p; print(p.show(p.add(p.len(p.str("hello")), p.int(3))))`|} in
-     print_endline greetings;
-     Py.Run.interactive()
+    print_endline greetings;
+    Py.Run.interactive()

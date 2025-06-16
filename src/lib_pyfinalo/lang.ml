@@ -57,18 +57,18 @@ module UntypedAst = struct
     | E_litint x -> Format.pp_print_int ppf x
     | E_litstr s -> Format.fprintf ppf "\"%s\"" (String.escaped s)
     | E_add (e1, e2) ->
-       Format.fprintf ppf "%a+%a"
-         pp_repr e1
-         pp_repr e2
+      Format.fprintf ppf "%a+%a"
+        pp_repr e1
+        pp_repr e2
     | E_mul (e1, e2) ->
-       Format.fprintf ppf "%a*%a"
-         pp_repr e1
-         pp_repr e2
+      Format.fprintf ppf "%a*%a"
+        pp_repr e1
+        pp_repr e2
     | E_len e ->
-       Format.fprintf ppf "len(%a)"
-         pp_repr e
+      Format.fprintf ppf "len(%a)"
+        pp_repr e
     | E_hole ->
-       Format.fprintf ppf "??"
+      Format.fprintf ppf "??"
     | _ -> .
 end
 
