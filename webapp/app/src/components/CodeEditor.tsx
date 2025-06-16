@@ -24,7 +24,7 @@ function CodeEditor({ value, onChange, language, disabled }: CodeEditorProps) {
         extensions={extensions}
         editable={!disabled}
         theme="dark"
-        height="400px"
+        className="code-mirror-flex"
       />
     </div>
   )
