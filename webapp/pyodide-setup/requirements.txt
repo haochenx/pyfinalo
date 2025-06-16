@@ -1,8 +1,0 @@
-# Requirements for Pyodide development
-# These are only needed if you're building custom packages for Pyodide
-
-pyodide-build==0.26.0
-wheel>=0.40.0
-setuptools>=68.0.0
-build>=1.0.0
-packaging>=23.0
