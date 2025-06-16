@@ -22,10 +22,10 @@ function createJavaScriptRepl() {
 
       // Check if it's a simple expression (no explicit return, no semicolons, no braces)
       const isSimpleExpression = codeWithoutComments.length > 0 &&
-                                 !codeWithoutComments.includes('return') &&
-                                 !codeWithoutComments.includes(';') &&
-                                 !codeWithoutComments.includes('{') &&
-                                 !codeWithoutComments.includes('}');
+        !codeWithoutComments.includes('return') &&
+        !codeWithoutComments.includes(';') &&
+        !codeWithoutComments.includes('{') &&
+        !codeWithoutComments.includes('}');
 
       if (isSimpleExpression) {
         // Wrap in return statement to capture the value

@@ -73,9 +73,9 @@ function App() {
           >
             {isLoadingRuntime ? 'Loading Runtime...' : isRunning ? 'Running...' : 'Run Code'}
           </button>
-          <a 
-            href="https://github.com/haochenx/pyfinalo" 
-            target="_blank" 
+          <a
+            href="https://github.com/haochenx/pyfinalo"
+            target="_blank"
             rel="noopener noreferrer"
             className="github-link"
           >

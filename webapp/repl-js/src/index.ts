@@ -20,30 +20,30 @@ export function createJavaScriptRepl(): JavaScriptRepl {
             constructor(jsExpr) {
               this._expr = jsExpr;
             }
-            
+
             add(other) {
               if (other instanceof Expr) {
                 return new Expr(add(this._expr, other._expr));
               }
               return new Expr(add(this._expr, other));
             }
-            
+
             mul(other) {
               if (other instanceof Expr) {
                 return new Expr(mul(this._expr, other._expr));
               }
               return new Expr(mul(this._expr, other));
             }
-            
+
             toString() {
               return show(this._expr);
             }
           }
-          
+
           // Wrap the basic functions to return Expr instances
           const _str = (value) => new Expr(str(value));
           const _int = (value) => new Expr(int(value));
-          
+
           // Evaluate user code and return the result
           return (() => { ${code} })();
           `

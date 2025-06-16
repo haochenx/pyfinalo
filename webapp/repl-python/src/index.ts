@@ -26,31 +26,31 @@ import sys
 
 class PyfinaloModule:
     """Python wrapper for pyfinalo JavaScript bindings"""
-    
+
     def __init__(self):
         # Get the pyfinalo JS module from global scope
         self._pyfinalo = js.window.pyfinalo
-    
+
     def str(self, value):
         """Create a string expression"""
         return self._pyfinalo.str(value)
-    
+
     def int(self, value):
         """Create an integer expression"""
         return self._pyfinalo.int(value)
-    
+
     def add(self, left, right):
         """Add two expressions"""
         return self._pyfinalo.add(left, right)
-    
+
     def mul(self, left, right):
         """Multiply two expressions"""
         return self._pyfinalo.mul(left, right)
-    
+
     def len(self, expr):
         """Get length of expression"""
         return self._pyfinalo.len(expr)
-    
+
     def show(self, expr):
         """Show expression result"""
         return self._pyfinalo.show(expr)
