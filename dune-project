@@ -5,6 +5,7 @@
 (package
  (name pyfinalo)
  (synopsis "pyfinalo")
+ (license MIT)
  (depends
   
   ;; for src/bin_pyfinalo_py
