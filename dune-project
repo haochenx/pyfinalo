@@ -5,6 +5,7 @@
 (package
  (name pyfinalo)
  (synopsis "pyfinalo")
+ (license ISC)
  (depends
   
   ;; for src/bin_pyfinalo_py
