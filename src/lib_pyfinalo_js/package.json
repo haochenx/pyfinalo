@@ -2,6 +2,7 @@
   "name": "pyfinalo_js",
   "module": "dist/index.js",
   "type": "module",
+  "license": "ISC",
   "scripts": {
     "build": "dune build . && tsup --config tsup.stage1.config.ts && tsup",
     "test": "bun test"

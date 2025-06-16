@@ -146,10 +146,10 @@ let () =
         testable
           (Checked.pp_repr pp_irepr)
           (fun e1 e2 -> match e1, e2 with
-           | Int_typed (e1, _), Int_typed (e2, _) -> e1 = e2
-           | String_typed (e1, _), String_typed (e2, _) -> e1 = e2
-           | Ill_typed term1, Ill_typed term2 -> term1 = term2
-           | _ -> false) in
+            | Int_typed (e1, _), Int_typed (e2, _) -> e1 = e2
+            | String_typed (e1, _), String_typed (e2, _) -> e1 = e2
+            | Ill_typed term1, Ill_typed term2 -> term1 = term2
+            | _ -> false) in
       let hole = UntypedAst.E_hole in
       [
           "lit", `Quick, (
