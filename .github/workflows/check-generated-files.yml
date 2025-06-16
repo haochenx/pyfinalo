@@ -17,6 +17,10 @@ jobs:
       with:
         ocaml-compiler: 5.1.0
         
+    - name: Install dependencies
+      run: |
+        opam install . --deps-only
+        
     - name: Check if opam files are up-to-date
       run: |
         # Generate opam files
