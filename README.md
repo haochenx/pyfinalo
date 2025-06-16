@@ -16,7 +16,6 @@ This project was originally intended as a demonstration of Python eDSL implement
 - **Multiple Interpreters**: Direct evaluation, AST construction, and explanatory type checking
 - **Python Integration**: Seamless Python bindings via [pyml](https://github.com/ocamllibs/pyml)
 - **JavaScript/TypeScript Integration**: JavaScript bindings via [js_of_ocaml](https://ocsigen.org/js_of_ocaml/)
-- **Type Safety**: Demonstrates both well-typed and ill-typed expression handling
 - **Docker Support**: Containerized development and execution environment
 
 ## Quick Start
@@ -27,7 +26,7 @@ This project was originally intended as a demonstration of Python eDSL implement
 >
 > Avoid OCaml 5.3 (or later) due to compatibility issues with pyml. This is caused by [stdcompat issue #36](https://github.com/ocamllibs/stdcompat/issues/36) in stdcompat, a dependency of pyml. After this issue is resolved, a new version of stdcompat containing the fix needs to be released to opam before OCaml 5.3+ can be supported.
 
-- **Python**: Version 3.9+ (tested with 3.9.13) - Note: Python bindings require OCaml < 5.3
+- **Python**: Version 3.9+ (tested with 3.9.13) - Note: as warned above, Python bindings require OCaml < 5.3 for now
 - **OCaml**: Version 5.1 or compatible with pyml and js_of_ocaml
 - **OPAM**: OCaml package manager
 - **Bun**: JavaScript runtime and package manager (for JavaScript bindings)
@@ -66,7 +65,7 @@ This project was originally intended as a demonstration of Python eDSL implement
    dune exec src/bin_pyfinalo_py/bin_pyfinalo_py.exe
    ```
 
-#### Option 2: Docker (Recommended for Quick Testing)
+#### Option 2: Docker
 
 1. **Clone and Build**:
    ```bash
@@ -165,7 +164,7 @@ console.log(complex); // Output: "10 : int"
 - **`pyfinalo_explain`**: Explanatory interpreter (`ExplainInterpUntyped`) - provides detailed type checking
 
 ### JavaScript/TypeScript Module
-- **`pyfinalo_js`**: Direct value interpreter available as an npm package (note: not published to npmjs.com)
+- **`pyfinalo_js`**: Type checking interpreter available as an npm package (note: not published to npmjs.com)
 
 To use the JavaScript module in your project after building:
 ```bash
