@@ -1,21 +1,21 @@
-.PHONY: default info prepare build test clean audit promote-audit
+.PHONY: default info build test clean audit promote-audit
 
 default: info build
 
 info:
 	$(info =========================== Building pyfinalo ===========================)
-	$(info > Run 'make prepare' to install dependencies)
+	$(info > Run 'make build' to build the project)
 	$(info > Run 'make test' to run all tests)
 	$(info > Run 'make audit' to check code quality)
 	$(info =========================================================================)
 
-prepare:
-	cd src/lib_pyfinalo_js && bun install
-
 # Combined build
-build: prepare
+build: src/lib_pyfinalo_js/node_modules
 	dune build
 	cd src/lib_pyfinalo_js && bun run build
+
+src/lib_pyfinalo_js/node_modules:
+	cd src/lib_pyfinalo_js && bun install
 
 # Combined test
 test:
