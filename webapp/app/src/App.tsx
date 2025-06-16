@@ -57,7 +57,7 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>pyfinalo REPL</h1>
+        <h1>Web pyfinalo REPL</h1>
         <div className="header-controls">
           <div className="runtime-selector">
             <label>Runtime:</label>
@@ -99,6 +99,10 @@ function App() {
           <pre className="output">{output}</pre>
         </div>
       </main>
+
+      <footer className="app-footer">
+        <p>This REPL was built through agentic coding with <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer">Claude Code</a></p>
+      </footer>
     </div>
   )
 }
