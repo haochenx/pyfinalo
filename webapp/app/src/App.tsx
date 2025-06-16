@@ -58,20 +58,30 @@ function App() {
     <div className="app">
       <header className="app-header">
         <h1>pyfinalo REPL</h1>
-        <div className="runtime-selector">
-          <label>Runtime:</label>
-          <select value={runtime} onChange={(e) => setRuntime(e.target.value as Runtime)}>
-            <option value="python">Python (Pyodide)</option>
-            <option value="javascript">JavaScript</option>
-          </select>
+        <div className="header-controls">
+          <div className="runtime-selector">
+            <label>Runtime:</label>
+            <select value={runtime} onChange={(e) => setRuntime(e.target.value as Runtime)}>
+              <option value="python">Python (Pyodide)</option>
+              <option value="javascript">JavaScript</option>
+            </select>
+          </div>
+          <button
+            className="run-button"
+            onClick={handleRun}
+            disabled={isRunning || isLoadingRuntime}
+          >
+            {isLoadingRuntime ? 'Loading Runtime...' : isRunning ? 'Running...' : 'Run Code'}
+          </button>
+          <a 
+            href="https://github.com/haochenx/pyfinalo" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="github-link"
+          >
+            GitHub
+          </a>
         </div>
-        <button
-          className="run-button"
-          onClick={handleRun}
-          disabled={isRunning || isLoadingRuntime}
-        >
-          {isLoadingRuntime ? 'Loading Runtime...' : isRunning ? 'Running...' : 'Run Code'}
-        </button>
       </header>
 
       <main className="app-main">
