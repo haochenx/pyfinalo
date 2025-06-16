@@ -126,8 +126,8 @@ async function checkEditorConfig() {
               modified = true;
             }
 
-            // Fix trailing whitespace (except for .md files)
-            if (!file.endsWith('.md')) {
+            // Fix trailing whitespace (except for .md and .t files)
+            if (!file.endsWith('.md') && !file.endsWith('.t')) {
               const lines = newContent.split('\n');
               const fixedLines = lines.map(line => line.trimEnd());
               const fixedContent = fixedLines.join('\n');
