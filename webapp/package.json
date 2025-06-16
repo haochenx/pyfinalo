@@ -9,21 +9,22 @@
     "worker"
   ],
   "scripts": {
-    "dev": "bun run --cwd app dev",
-    "build": "bun run build:repls && bun run build:app && bun run build:worker",
-    "build:app": "bun run --cwd app build",
-    "build:repls": "bun run build:repl-python && bun run build:repl-js",
-    "build:repl-python": "bun run --cwd repl-python build",
-    "build:repl-js": "bun run --cwd repl-js build",
-    "build:worker": "bun run --cwd worker build",
-    "test": "bun run test:app && bun run test:repls",
-    "test:app": "bun run --cwd app test",
-    "test:repls": "bun run --cwd repl-python test && bun run --cwd repl-js test",
-    "deploy": "bun run scripts/deploy.sh",
-    "upload-assets": "bun run scripts/upload-r2-assets.sh"
+    "dev": "exit 1 && bun run --cwd app dev",
+    "build": "exit 1 && bun run build:repls && bun run build:app && bun run build:worker",
+    "build:app": "exit 1 && bun run --cwd app build",
+    "build:repls": "exit 1 && bun run build:repl-python && bun run build:repl-js",
+    "build:repl-python": "exit 1 && bun run --cwd repl-python build",
+    "build:repl-js": "exit 1 && bun run --cwd repl-js build",
+    "build:worker": "exit 1 && bun run --cwd worker build",
+    "test": "exit 1 && bun run test:app && bun run test:repls",
+    "test:app": "exit 1 && bun run --cwd app test",
+    "test:repls": "exit 1 && bun run --cwd repl-python test && bun run --cwd repl-js test",
+    "deploy": "exit 1 && bun run scripts/deploy.sh",
+    "upload-assets": "exit 1 && bun run scripts/upload-r2-assets.sh"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "wrangler": "^4.20.0"
   }
 }
