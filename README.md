@@ -219,7 +219,7 @@ cd src/lib_pyfinalo_js && bun test
 pyfinalo/
 ├── src/                          # Source code
 │   ├── lib_pyfinalo/             # Core DSL implementation
-│   │   ├── lang.ml               # Language definitions and interpreters
+│   │   ├── lang.ml               # Language definitions
 │   │   ├── interp.ml             # Interpreter implementations
 │   │   └── test/                 # Unit tests
 │   ├── bin_pyfinalo_py/          # Python bindings
@@ -233,25 +233,14 @@ pyfinalo/
 │       └── test/                 # JavaScript tests
 ├── webapp/                       # Web REPL application
 │   ├── app/                      # Main Vite app
-│   │   ├── src/                  # React source code
-│   │   │   ├── App.tsx           # Main application component
-│   │   │   ├── components/       # React components
-│   │   │   └── lib/              # Runtime utilities
-│   │   ├── public/               # Static assets
-│   │   │   └── repl-bundles/     # Compiled REPL bundles
-│   │   └── vite.config.ts        # Vite configuration
 │   ├── repl-js/                  # JavaScript REPL implementation
-│   │   └── src/                  # REPL source code
 │   └── repl-python/              # Python (Pyodide) REPL implementation
-│       └── src/                  # REPL source code
 ├── docker/                       # Docker configurations
 │   ├── Dockerfile                # Production container
 │   ├── Dockerfile.dev            # Development container
 │   ├── build.sh                  # Build script
 │   └── build-dev.sh              # Development build script
 ├── scripts/                      # Utility scripts
-│   ├── audit.ts                  # Dependency audit script
-│   └── check-dev-containers-cleaned.sh
 ├── dune-project                  # Dune project configuration
 ├── pyfinalo.opam                 # OPAM package definition
 ├── Makefile                      # Build automation
