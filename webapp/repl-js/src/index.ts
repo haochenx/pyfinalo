@@ -1,29 +1,11 @@
-// Import pyfinalo dynamically to handle browser environment
-let pyfinalo: any;
+import pyfinalo from 'pyfinalo_js';
 
 export interface JavaScriptRepl {
   evaluate: (code: string) => string;
 }
 
-// Initialize pyfinalo from the global scope or import
-async function initializePyfinalo() {
-  if ((window as any).pyfinalo) {
-    pyfinalo = (window as any).pyfinalo;
-  } else {
-    // Try to load from the expected location
-    try {
-      const module = await import('/repl-bundles/pyfinalo_js.js');
-      pyfinalo = module.default || module;
-      (window as any).pyfinalo = pyfinalo;
-    } catch (e) {
-      console.error('Failed to load pyfinalo module:', e);
-      throw new Error('pyfinalo module not found');
-    }
-  }
-}
-
-// Call initialization immediately
-initializePyfinalo().catch(console.error);
+// Make pyfinalo available globally for the REPL
+(window as any).pyfinalo = pyfinalo;
 
 export function createJavaScriptRepl(): JavaScriptRepl {
   return {

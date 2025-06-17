@@ -1,4 +1,5 @@
 import { defineConfig } from 'tsup';
+import { resolve } from 'path';
 
 export default defineConfig({
   entry: {
@@ -12,5 +13,10 @@ export default defineConfig({
   target: 'es2020',
   splitting: false,
   treeshake: true,
-  external: ['pyfinalo_js'],
+  noExternal: ['pyfinalo_js'],
+  esbuildOptions(options) {
+    options.alias = {
+      'pyfinalo_js': resolve(__dirname, '../../src/lib_pyfinalo_js')
+    };
+  }
 });
