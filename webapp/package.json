@@ -9,11 +9,14 @@
   ],
   "scripts": {
     "dev": "bun run --cwd app dev",
-    "build": "bun run build:repls && bun run build:app",
+    "build": "bun run build:repls && bun run copy:repls && bun run build:app",
     "build:app": "bun run --cwd app build",
-    "build:repls": "bun run build:repl-python && bun run build:repl-js",
+    "build:repls": "bun run build:repl-python && bun run build:repl-js && bun run build:pyfinalo-js",
     "build:repl-python": "bun run --cwd repl-python build",
-    "build:repl-js": "bun run --cwd repl-js build"
+    "build:repl-js": "bun run --cwd repl-js build",
+    "build:pyfinalo-js": "bun run --cwd ../src/lib_pyfinalo_js build",
+    "copy:repls": "rsync -a repl-js/dist/js-repl.js app/public/repl-bundles/ && rsync -a repl-python/dist/python-repl.js app/public/repl-bundles/ && rsync -a ../src/lib_pyfinalo_js/dist/index.js app/public/repl-bundles/pyfinalo_js.js",
+    "test:repl": "node test-repl.js"
   },
   "devDependencies": {
     "@types/bun": "latest",
