@@ -14,10 +14,15 @@
     "build:repls": "bun run build:repl-python && bun run build:repl-js && bun run build:pyfinalo-js",
     "build:repl-python": "bun run --cwd repl-python build",
     "build:repl-js": "bun run --cwd repl-js build",
-    "build:pyfinalo-js": "bun run --cwd ../src/lib_pyfinalo_js build"
+    "build:pyfinalo-js": "bun run --cwd ../src/lib_pyfinalo_js build",
+    "test": "playwright test --reporter=list",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed"
   },
   "devDependencies": {
+    "@playwright/test": "^1.53.0",
     "@types/bun": "latest",
+    "playwright": "^1.53.0",
     "typescript": "^5.7.0",
     "wrangler": "^4.20.0"
   }
