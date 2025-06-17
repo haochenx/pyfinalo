@@ -1,4 +1,14 @@
-import { loadPyodide, PyodideInterface } from 'pyodide';
+// Pyodide types
+interface PyodideInterface {
+  runPythonAsync: (code: string) => Promise<any>;
+  globals: any;
+}
+
+declare global {
+  interface Window {
+    loadPyodide: (config?: any) => Promise<PyodideInterface>;
+  }
+}
 
 export interface PythonRepl {
   evaluate: (code: string) => Promise<string>;
@@ -10,7 +20,18 @@ let pyodideReadyPromise: Promise<PyodideInterface> | null = null;
 async function loadPyodideInstance(): Promise<PyodideInterface> {
   if (pyodideReadyPromise) return pyodideReadyPromise;
 
-  pyodideReadyPromise = loadPyodide({
+  // Dynamically load Pyodide script
+  if (!window.loadPyodide) {
+    await new Promise<void>((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/pyodide/v0.26.0/full/pyodide.js';
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error('Failed to load Pyodide'));
+      document.head.appendChild(script);
+    });
+  }
+
+  pyodideReadyPromise = window.loadPyodide({
     indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.26.0/full/',
   });
 
