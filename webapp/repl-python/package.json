@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "test": "vitest"
+    "test": "bun test"
   },
   "dependencies": {
     "pyodide": "0.26.0"
@@ -13,7 +13,6 @@
   "devDependencies": {
     "@types/node": "^20.0.0",
     "tsup": "^8.0.0",
-    "vitest": "^1.0.0",
     "typescript": "^5.7.0"
   }
 }
