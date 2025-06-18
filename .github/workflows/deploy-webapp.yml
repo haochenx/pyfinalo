@@ -60,6 +60,7 @@ jobs:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         command: pages deploy webapp/app/dist --project-name=pyfinalo-webapp --branch=${{ github.head_ref || github.ref_name }}
+        gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Extract deployment URL
       id: deployment-url
