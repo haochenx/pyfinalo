@@ -64,7 +64,7 @@ jobs:
       run: |
         # Extract URL from wrangler output
         echo "Deployment complete. The URL should be in the wrangler output above."
-        
+
     # Note: Wrangler action doesn't currently provide deployment URL as output
     # The URL will be visible in the action logs
     # For automatic PR comments, consider using cloudflare/pages-action instead
