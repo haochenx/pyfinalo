@@ -118,13 +118,6 @@ jobs:
       working-directory: webapp
       run: npx playwright install --with-deps
 
-    - name: Start webapp dev server
-      working-directory: webapp
-      run: |
-        bun run dev &
-        sleep 5  # Wait for server to start
-        curl -f http://localhost:5173 || exit 1  # Verify server is running
-
     - name: Run webapp tests
       run: make test-webapp
 
