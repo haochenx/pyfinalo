@@ -1,0 +1,70 @@
+name: Deploy Webapp to Cloudflare Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+      pull-requests: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: latest
+
+    - name: Setup OCaml
+      uses: ocaml/setup-ocaml@v3
+      with:
+        ocaml-compiler: 5.1.0
+
+    - name: Install OCaml dependencies
+      run: |
+        opam install . --deps-only --with-test
+
+    - name: Build webapp
+      run: |
+        eval $(opam env)
+        make build-webapp
+
+    # Only run tests when deploying to production (main branch)
+    - name: Install Playwright browsers
+      if: github.ref == 'refs/heads/main'
+      working-directory: webapp
+      run: npx playwright install --with-deps
+
+    - name: Run webapp tests
+      if: github.ref == 'refs/heads/main'
+      run: |
+        eval $(opam env)
+        make test-webapp
+
+    - name: Deploy to Cloudflare Pages
+      id: deploy
+      uses: cloudflare/wrangler-action@v3
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        command: pages deploy webapp/app/dist --project-name=pyfinalo-webapp
+
+    # Add comment with deployment URL for PRs
+    - name: Find deployment URL
+      if: github.event_name == 'pull_request'
+      id: deployment-url
+      run: |
+        # Extract URL from wrangler output
+        echo "Deployment complete. The URL should be in the wrangler output above."
+        
+    # Note: Wrangler action doesn't currently provide deployment URL as output
+    # The URL will be visible in the action logs
+    # For automatic PR comments, consider using cloudflare/pages-action instead
