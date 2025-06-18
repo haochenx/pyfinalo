@@ -99,7 +99,7 @@ async function checkEditorConfig() {
 
   try {
     console.log("Running: editorconfig-checker");
-    const result = await $`${checkerPath}`.nothrow();
+    const result = await $`${checkerPath} --exclude '_opam'`.nothrow();
     if (result.exitCode !== 0) {
       if (shouldFix) {
         info("Attempting to fix EditorConfig violations...");
@@ -146,7 +146,7 @@ async function checkEditorConfig() {
         }
 
         // Check again
-        const recheckResult = await $`${checkerPath}`.nothrow();
+        const recheckResult = await $`${checkerPath} --exclude '_opam'`.nothrow();
         if (recheckResult.exitCode === 0) {
           success("EditorConfig violations fixed");
           info("Please review the changes and re-run tests to ensure nothing was broken");
