@@ -25,5 +25,6 @@ dist-ssr
 
 # Test artifacts
 .test-artifacts/
-playwright-report/
 test-results/
+playwright-report/
+playwright/.cache/

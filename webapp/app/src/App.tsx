@@ -85,7 +85,7 @@ function App() {
       </header>
 
       <main className="app-main">
-        <div className="editor-section">
+        <div className="editor-section" data-testid={`${runtime === 'javascript' ? 'js' : 'python'}-repl`}>
           <CodeEditor
             value={code}
             onChange={setCode}
@@ -96,7 +96,7 @@ function App() {
 
         <div className="output-section">
           <h3>Output</h3>
-          <pre className="output">{output}</pre>
+          <pre className="output" data-testid={`${runtime === 'javascript' ? 'js' : 'python'}-repl-output`}>{output}</pre>
         </div>
       </main>
 

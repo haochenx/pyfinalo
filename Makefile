@@ -1,4 +1,4 @@
-.PHONY: default info build test clean audit promote-audit build-webapp
+.PHONY: default info build test clean audit promote-audit build-webapp test-webapp
 
 default: info build
 
@@ -26,6 +26,10 @@ src/lib_pyfinalo_js/node_modules:
 test:
 	dune runtest
 	cd src/lib_pyfinalo_js && bun run test
+
+# Webapp test
+test-webapp:
+	cd webapp && bun run test
 
 # Combined clean
 clean:

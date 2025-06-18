@@ -3,6 +3,10 @@ import { python } from '@codemirror/lang-python'
 import { javascript } from '@codemirror/lang-javascript'
 import './CodeEditor.css'
 
+if (window != null) {
+  (window as any).CodeMirror = CodeMirror;
+}
+
 interface CodeEditorProps {
   value: string
   onChange: (value: string) => void

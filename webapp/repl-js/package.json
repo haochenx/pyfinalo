@@ -3,17 +3,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "vite build",
-    "dev": "vite build --watch",
-    "test": "vitest"
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "bun test"
   },
   "dependencies": {
     "pyfinalo_js": "../../src/lib_pyfinalo_js"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
-    "vite": "^5.0.0",
-    "vitest": "^1.0.0",
+    "tsup": "^8.0.0",
     "typescript": "^5.7.0"
   }
 }
