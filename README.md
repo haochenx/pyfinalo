@@ -234,7 +234,8 @@ pyfinalo/
 ├── webapp/                       # Web REPL application
 │   ├── app/                      # Main Vite app
 │   ├── repl-js/                  # JavaScript REPL implementation
-│   └── repl-python/              # Python (Pyodide) REPL implementation
+│   ├── repl-python/              # Python (Pyodide) REPL implementation
+│   └── tests/                    # Playwright E2E integration tests
 ├── docker/                       # Docker configurations
 │   ├── Dockerfile                # Production container
 │   ├── Dockerfile.dev            # Development container
